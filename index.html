@@ -10,31 +10,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Avenir:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Strive Branded Colors from image_1.png */
-            --bg-color: #FAFCFE; /* Very fresh, slightly cool light gray */
+            /* STREIVE BRAND COLORS */
+            --strive-dark-navy: #000F3C;
+            --strive-muted-blue: #5A698F;
             --card-bg: #FFFFFF;
-            --text-main: #000F3C; /* Dark, navy blue from 'Stride' text */
-            --text-muted: #5A698F;
-            --border-color: #EAEDF3;
-            --shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.01);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* The main gradient colors */
+            --g-pink: #F94186;
+            --g-purple: #C44FFF;
+            --g-blue: #6464FF;
+            --g-cyan: #44CFFF;
+            --g-gold: #FFB636;
+
+            /* Page background and shadow */
+            --shadow-light: 0 10px 15px -3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.01);
+            --transition-smooth: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         body {
             font-family: 'Avenir', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--strive-dark-navy);
             margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            
+            /* GENTLE STRIVE GRADIENT BACKGROUND */
+            background-color: #fdfcff;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(249, 65, 134, 0.04) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, rgba(100, 100, 255, 0.03) 0px, transparent 50%),
+                radial-gradient(at 80% 90%, rgba(255, 182, 54, 0.03) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(196, 79, 255, 0.02) 0px, transparent 50%);
+            background-attachment: fixed;
         }
 
         /* Fixed Navigation Header */
         nav.main-nav {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(0, 15, 60, 0.05);
             padding: 16px 20px;
             display: flex;
             align-items: center;
@@ -62,9 +78,10 @@
         }
         .user-avatar {
             width: 36px; height: 36px;
-            background: #E0E7FF; border-radius: 50%;
+            background: rgba(100, 100, 255, 0.1); 
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            color: var(--text-main); font-weight: 700;
+            color: var(--strive-dark-navy); font-weight: 700;
         }
 
         /* Main Content Area */
@@ -84,11 +101,15 @@
             font-size: 3.2rem;
             font-weight: 700;
             margin-bottom: 8px;
+            color: var(--strive-dark-navy);
         }
 
-        header.dash-header p { color: var(--text-muted); font-size: 1.2rem; }
+        header.dash-header p { color: var(--strive-muted-blue); font-size: 1.2rem; }
 
-        /* The Centering Grid */
+        /* The Grid */
+        .topics-grid-container {
+            position: relative;
+        }
         .topics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -96,29 +117,36 @@
             justify-content: center; 
         }
 
-        /* Topic Card Styling */
+        /* CARD ANIMATION STATE & TRANSITION */
+        .card-wrapper {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* TOPIC CARD STYLING & BASE ANIMATION */
         .topic-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(0, 15, 60, 0.05);
             border-radius: 20px;
             padding: 32px;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            transform-origin: center center;
-            overflow: hidden; /* For gradient border effect */
+            box-shadow: var(--shadow-light);
+            
+            /* CSS Animation Properties for the "pop" from place */
+            transition: var(--transition-smooth);
+            will-change: transform, box-shadow, z-index, position, top, left, width, max-width;
+            overflow: hidden;
         }
 
-        /* Hover: Gradient Border Effect */
-        .topic-card:hover {
+        /* Hover: Minimal popup from position */
+        .topic-card:not(.focused):hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
-            /* Inject the gradient from image_0.png as a bottom accent */
+            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.04);
             border-bottom: 4px solid transparent;
             border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
             border-image-slice: 1;
-            padding-bottom: 28px; /* Offset original padding */
+            padding-bottom: 28px;
         }
 
         .icon-wrap {
@@ -126,88 +154,79 @@
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 24px;
-            border: 1px solid var(--border-color);
-            background: #F4F7FB;
+            border: 1px solid rgba(0, 15, 60, 0.05);
+            background: rgba(100, 100, 255, 0.03); 
         }
 
-        .topic-card .icon-wrap i { color: var(--text-main); width: 26px; height: 26px; }
+        .topic-card .icon-wrap i { color: var(--strive-dark-navy); width: 26px; height: 26px; }
 
-        .topic-card h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; color: var(--text-main); }
-        .topic-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin: 0; }
+        .topic-card h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; color: var(--strive-dark-navy); }
+        .topic-card p { color: var(--strive-muted-blue); font-size: 1rem; line-height: 1.6; margin: 0; }
 
-        /* The Overlay (Same functionality, different aesthetic) */
+        /* Focused Content Area */
         .skills-content {
             display: none;
             margin-top: 24px;
             opacity: 0;
-            transition: opacity 0.3s var(--transition);
+            transition: opacity 0.3s ease-in;
         }
 
         .skill-list { list-style: none; padding: 0; margin: 0; }
         .skill-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 12px 0; border-bottom: 1px solid #F1F4F8;
-            font-size: 1rem; color: var(--text-main);
+            padding: 12px 0; border-bottom: 1px solid rgba(0, 15, 60, 0.03);
+            font-size: 1rem; color: var(--strive-dark-navy);
         }
         .skill-item:last-child { border-bottom: none; }
         
         /* Branded Dot (Rainbow Gradient) from image_0.png */
         .dot { 
             width: 8px; height: 8px; border-radius: 50%; 
-            background: linear-gradient(45deg, #F94186, #FFB636); /* Simplify gradient for small dots */
+            background: linear-gradient(45deg, #F94186, #C44FFF, #6464FF, #44CFFF, #FFB636);
         }
 
-        /* Full Strive Gradient for card accent when focused */
-        .strive-accent {
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 6px;
-            background: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
-            display: none;
+        /* Close Button inside Focused Card */
+        .close-topic {
+            position: absolute; top: 16px; right: 16px;
+            background: none; border: none; cursor: pointer;
+            color: #999; display: none; padding: 8px; z-index: 3;
         }
+        .close-topic:hover { color: var(--strive-dark-navy); }
 
-        .topic-card.focused .strive-accent { display: block; }
+        /* THE ANIMATION CORE */
         .topic-card.focused {
+            display: block;
+            position: fixed;
+            z-index: 101;
+            top: 50%; left: 50%;
+            width: 90%; max-width: 500px;
+            transform: translate(-50%, -50%) scale(1.05) !important; /* Forces centering and slight expansion */
+            
+            box-shadow: 0 40px 60px -20px rgba(0,0,0,0.1);
+            cursor: default;
+            pointer-events: auto;
+            
+            /* Apply the rainbow gradient border when focused */
             border: 2px solid transparent;
             border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
             border-image-slice: 1;
-            padding-bottom: 26px; /* Balance full accent */
+            padding-bottom: 30px;
         }
+
+        .topic-card.focused .skills-content { display: block; opacity: 1; }
+        .topic-card.focused .close-topic { display: block; }
 
         /* Dim Background Overlay */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.15); /* Slightly darker dim for better focus */
-            backdrop-filter: blur(5px);
+            background: rgba(0,15,60,0.1); /* Subtler dim for softer gradient feel */
+            backdrop-filter: blur(4px);
             opacity: 0; visibility: hidden; z-index: 100;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
         }
 
         body.topic-open { overflow: hidden; }
         body.topic-open .overlay { opacity: 1; visibility: visible; }
-
-        /* The focused card */
-        .topic-card.focused {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(1.05);
-            width: 90%; max-width: 500px;
-            z-index: 101;
-            cursor: default;
-            pointer-events: auto;
-        }
-        .topic-card.focused:hover { transform: translate(-50%, -50%) scale(1.05); }
-
-        .topic-card.focused .skills-content { display: block; opacity: 1; }
-
-        .close-topic {
-            position: absolute; top: 16px; right: 16px;
-            background: none; border: none; cursor: pointer;
-            color: #999; display: none; padding: 8px; z-index: 2;
-        }
-        .topic-card.focused .close-topic { display: block; }
-        .close-topic:hover { color: var(--text-main); }
-
-        .topics-grid-container { position: relative; }
 
     </style>
 </head>
@@ -218,7 +237,7 @@
         <img src="image_1.png" alt="Strive Logo">
     </div>
     <div class="user-controls">
-        <span style="font-weight: 500; font-size: 0.95rem; color:var(--text-muted)">Grade 6 Student</span>
+        <span style="font-weight: 500; font-size: 0.95rem; color:var(--strive-muted-blue)">Grade 6 Student</span>
         <div class="user-avatar">JS</div>
     </div>
 </nav>
@@ -233,72 +252,77 @@
 
     <div class="topics-grid-container">
         <div class="topics-grid">
-            <div class="topic-card" onclick="focusTopic(this)">
-                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
-                <div class="icon-wrap"><i data-lucide="percent"></i></div>
-                <h3>Ratios & Proportions</h3>
-                <p>Understanding concepts of ratio and using ratio reasoning to solve problems.</p>
-                
-                <div class="skills-content">
-                    <ul class="skill-list">
-                        <li class="skill-item"><div class="dot"></div>Ratios and rates</li>
-                        <li class="skill-item"><div class="dot"></div>Ratio tables & graphs</li>
-                        <li class="skill-item"><div class="dot"></div>Compare ratios and solve rate problems</li>
-                        <li class="skill-item"><div class="dot"></div>Percent concepts & calculation</li>
-                    </ul>
+            
+            <div class="card-wrapper" id="wrapper-1">
+                <div class="topic-card" id="card-1" onclick="focusTopic(this, 1)">
+                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
+                    <div class="icon-wrap"><i data-lucide="percent"></i></div>
+                    <h3>Ratios & Proportions</h3>
+                    <p>Understanding concepts of ratio and using ratio reasoning to solve problems.</p>
+                    
+                    <div class="skills-content">
+                        <ul class="skill-list">
+                            <li class="skill-item"><div class="dot"></div>Ratios and rates</li>
+                            <li class="skill-item"><div class="dot"></div>Ratio tables & graphs</li>
+                            <li class="skill-item"><div class="dot"></div>Compare ratios and solve rate problems</li>
+                            <li class="skill-item"><div class="dot"></div>Percent concepts & calculation</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="strive-accent"></div>
             </div>
 
-            <div class="topic-card" onclick="focusTopic(this)">
-                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="calculator"></i></button>
-                <div class="icon-wrap"><i data-lucide="binary"></i></div>
-                <h3>The Number System</h3>
-                <p>Fluency with multiplication and division of rational numbers and fractions.</p>
+            <div class="card-wrapper" id="wrapper-2">
+                <div class="topic-card" id="card-2" onclick="focusTopic(this, 2)">
+                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
+                    <div class="icon-wrap"><i data-lucide="binary"></i></div>
+                    <h3>The Number System</h3>
+                    <p>Fluency with multiplication and division of rational numbers and fractions.</p>
 
-                <div class="skills-content">
-                    <ul class="skill-list">
-                        <li class="skill-item"><div class="dot"></div>Divide fractions by fractions</li>
-                        <li class="skill-item"><div class="dot"></div>Multi-digit division & decimal operations</li>
-                        <li class="skill-item"><div class="dot"></div>Common factors and multiples</li>
-                        <li class="skill-item"><div class="dot"></div>Positive & negative numbers</li>
-                    </ul>
+                    <div class="skills-content">
+                        <ul class="skill-list">
+                            <li class="skill-item"><div class="dot"></div>Divide fractions by fractions</li>
+                            <li class="skill-item"><div class="dot"></div>Multi-digit division & decimal operations</li>
+                            <li class="skill-item"><div class="dot"></div>Common factors and multiples</li>
+                            <li class="skill-item"><div class="dot"></div>Positive & negative numbers</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="strive-accent"></div>
             </div>
 
-            <div class="topic-card" onclick="focusTopic(this)">
-                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="sigma"></i></button>
-                <div class="icon-wrap"><i data-lucide="equal"></i></div>
-                <h3>Expressions & Equations</h3>
-                <p>Move from arithmetic to working with variables and algebraic expressions.</p>
+            <div class="card-wrapper" id="wrapper-3">
+                <div class="topic-card" id="card-3" onclick="focusTopic(this, 3)">
+                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
+                    <div class="icon-wrap"><i data-lucide="equal"></i></div>
+                    <h3>Expressions & Equations</h3>
+                    <p>Move from arithmetic to working with variables and algebraic expressions.</p>
 
-                <div class="skills-content">
-                    <ul class="skill-list">
-                        <li class="skill-item"><div class="dot"></div>Algebraic expressions with exponents</li>
-                        <li class="skill-item"><div class="dot"></div>Writing expressions for real situations</li>
-                        <li class="skill-item"><div class="dot"></div>Understand and solve simple equations</li>
-                        <li class="skill-item"><div class="dot"></div>Represent inequalities</li>
-                    </ul>
+                    <div class="skills-content">
+                        <ul class="skill-list">
+                            <li class="skill-item"><div class="dot"></div>Algebraic expressions with exponents</li>
+                            <li class="skill-item"><div class="dot"></div>Writing expressions for real situations</li>
+                            <li class="skill-item"><div class="dot"></div>Understand and solve simple equations</li>
+                            <li class="skill-item"><div class="dot"></div>Represent inequalities</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="strive-accent"></div>
             </div>
 
-            <div class="topic-card" onclick="focusTopic(this)">
-                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="triangle"></i></button>
-                <div class="icon-wrap"><i data-lucide="shapes"></i></div>
-                <h3>Geometry</h3>
-                <p>Solve real-world problems involving area, surface area, and volume.</p>
+            <div class="card-wrapper" id="wrapper-4">
+                <div class="topic-card" id="card-4" onclick="focusTopic(this, 4)">
+                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
+                    <div class="icon-wrap"><i data-lucide="shapes"></i></div>
+                    <h3>Geometry</h3>
+                    <p>Solve real-world problems involving area, surface area, and volume.</p>
 
-                <div class="skills-content">
-                    <ul class="skill-list">
-                        <li class="skill-item"><div class="dot"></div>Area of triangles, quadrilaterals & polygons</li>
-                        <li class="skill-item"><div class="dot"></div>Polygons on the coordinate plane</li>
-                        <li class="skill-item"><div class="dot"></div>Volume of prisms (fractional edges)</li>
-                        <li class="skill-item"><div class="dot"></div>Nets and surface area of 3D figures</li>
-                    </ul>
+                    <div class="skills-content">
+                        <ul class="skill-list">
+                            <li class="skill-item"><div class="dot"></div>Area of triangles, quadrilaterals & polygons</li>
+                            <li class="skill-item"><div class="dot"></div>Polygons on the coordinate plane</li>
+                            <li class="skill-item"><div class="dot"></div>Volume of prisms (fractional edges)</li>
+                            <li class="skill-item"><div class="dot"></div>Nets and surface area of 3D figures</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="strive-accent"></div>
             </div>
             
         </div>
@@ -309,17 +333,39 @@
     lucide.createIcons();
 
     let currentlyFocusedCard = null;
+    let focusedWrapperId = null;
 
-    function focusTopic(card) {
+    function focusTopic(card, wrapperId) {
         if (currentlyFocusedCard === card) return; // Already focused
         
+        // Ensure only one card focuses
         if (currentlyFocusedCard) {
             closeTopic();
         }
 
+        // --- Store current dimensions/position ---
+        const wrapper = document.getElementById('wrapper-' + wrapperId);
+        const rect = card.getBoundingClientRect();
+        
+        // This makes the transition smooth by calculating initial state
+        card.style.transition = 'none'; // Disable hover transitions
+        card.style.position = 'fixed';
+        card.style.top = rect.top + 'px';
+        card.style.left = rect.left + 'px';
+        card.style.width = rect.width + 'px';
+        card.style.transform = 'translate(0, 0)'; // Ensure no initial translate is present
+        card.style.zIndex = '101'; // Place above overlay
+        
         currentlyFocusedCard = card;
-        document.body.classList.add('topic-open');
+        focusedWrapperId = wrapperId;
+
+        // --- Force browser reflow to apply the initial inline styles ---
+        card.offsetHeight;
+
+        // --- Activate Focus state (triggered by CSS) ---
+        card.style.transition = 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)'; // Restore smooth animation
         card.classList.add('focused');
+        document.body.classList.add('topic-open');
     }
 
     function closeTopic() {
@@ -327,9 +373,25 @@
 
         currentlyFocusedCard.classList.remove('focused');
         document.body.classList.remove('topic-open');
-        currentlyFocusedCard = null;
+        
+        // Clear the fixed positioning styles so it pops back into the grid
+        setTimeout(() => {
+            // Check if still current to avoid issues if another card was clicked quickly
+            if(currentlyFocusedCard){
+                currentlyFocusedCard.style.position = '';
+                currentlyFocusedCard.style.top = '';
+                currentlyFocusedCard.style.left = '';
+                currentlyFocusedCard.style.width = '';
+                currentlyFocusedCard.style.transform = '';
+                currentlyFocusedCard.style.zIndex = '';
+                currentlyFocusedCard.style.transition = ''; // Restore base transition
+                currentlyFocusedCard = null;
+                focusedWrapperId = null;
+            }
+        }, 500); // Wait for the transition out to complete
     }
 
+    // Escape key closes the focus mode
     document.addEventListener('keydown', function(e) {
         if (e.key === "Escape" && currentlyFocusedCard) {
             closeTopic();
