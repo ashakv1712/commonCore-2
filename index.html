@@ -3,181 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 6 Math Explorer</title>
+    <title>Strive Math | Grade 6 Dashboard</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Avenir:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --accent-blue: #38bdf8;
-            --accent-purple: #818cf8;
-            --accent-pink: #f472b6;
-            --text-white: #f8fafc;
+            /* Strive Branded Colors from image_1.png */
+            --bg-color: #FAFCFE; /* Very fresh, slightly cool light gray */
+            --card-bg: #FFFFFF;
+            --text-main: #000F3C; /* Dark, navy blue from 'Stride' text */
+            --text-muted: #5A698F;
+            --border-color: #EAEDF3;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.01);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Avenir', 'Helvetica Neue', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 0% 0%, #1e293b 0%, transparent 50%),
-                              radial-gradient(circle at 100% 100%, #1e1b4b 0%, transparent 50%);
-            color: var(--text-white);
+            color: var(--text-main);
             margin: 0;
             min-height: 100vh;
-            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; }
+        /* Fixed Navigation Header */
+        nav.main-nav {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
 
-        header {
+        .strive-logo-container {
+            height: 36px;
+            width: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .strive-logo-container img {
+            height: 100%;
+            width: auto;
+        }
+
+        .user-controls {
+            display: flex;
+            gap: 16px;
+        }
+        .user-avatar {
+            width: 36px; height: 36px;
+            background: #E0E7FF; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); font-weight: 700;
+        }
+
+        /* Main Content Area */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            flex: 1;
+        }
+
+        header.dash-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
-        header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+        header.dash-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        header p { color: #94a3b8; font-size: 1.2rem; }
+        header.dash-header p { color: var(--text-muted); font-size: 1.2rem; }
 
-        /* The Bento Grid */
-        .bento-grid {
+        /* The Centering Grid */
+        .topics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 24px;
+            justify-content: center; 
         }
 
+        /* Topic Card Styling */
         .topic-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
             padding: 32px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
             position: relative;
-            overflow: hidden;
+            transform-origin: center center;
+            overflow: hidden; /* For gradient border effect */
         }
 
+        /* Hover: Gradient Border Effect */
         .topic-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .topic-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05));
-            pointer-events: none;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+            /* Inject the gradient from image_0.png as a bottom accent */
+            border-bottom: 4px solid transparent;
+            border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
+            border-image-slice: 1;
+            padding-bottom: 28px; /* Offset original padding */
         }
 
         .icon-wrap {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 52px; height: 52px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
             margin-bottom: 24px;
-            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            background: #F4F7FB;
         }
 
-        .topic-card h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
-        .topic-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0; }
+        .topic-card .icon-wrap i { color: var(--text-main); width: 26px; height: 26px; }
 
-        /* Skill List Expansion */
-        .skills-overlay {
+        .topic-card h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; color: var(--text-main); }
+        .topic-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin: 0; }
+
+        /* The Overlay (Same functionality, different aesthetic) */
+        .skills-content {
             display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.4s ease forwards;
+            margin-top: 24px;
+            opacity: 0;
+            transition: opacity 0.3s var(--transition);
         }
 
-        .topic-card.active .skills-overlay { display: block; }
-        .topic-card.active { grid-row: span 2; background: rgba(30, 41, 59, 0.95); }
-
-        .skill-node {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            transition: color 0.2s;
+        .skill-list { list-style: none; padding: 0; margin: 0; }
+        .skill-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 0; border-bottom: 1px solid #F1F4F8;
+            font-size: 1rem; color: var(--text-main);
+        }
+        .skill-item:last-child { border-bottom: none; }
+        
+        /* Branded Dot (Rainbow Gradient) from image_0.png */
+        .dot { 
+            width: 8px; height: 8px; border-radius: 50%; 
+            background: linear-gradient(45deg, #F94186, #FFB636); /* Simplify gradient for small dots */
         }
 
-        .skill-node:hover { color: var(--accent-blue); }
-        .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-blue); }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Full Strive Gradient for card accent when focused */
+        .strive-accent {
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 6px;
+            background: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
+            display: none;
         }
+
+        .topic-card.focused .strive-accent { display: block; }
+        .topic-card.focused {
+            border: 2px solid transparent;
+            border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
+            border-image-slice: 1;
+            padding-bottom: 26px; /* Balance full accent */
+        }
+
+        /* Dim Background Overlay */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.15); /* Slightly darker dim for better focus */
+            backdrop-filter: blur(5px);
+            opacity: 0; visibility: hidden; z-index: 100;
+            transition: var(--transition);
+        }
+
+        body.topic-open { overflow: hidden; }
+        body.topic-open .overlay { opacity: 1; visibility: visible; }
+
+        /* The focused card */
+        .topic-card.focused {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(1.05);
+            width: 90%; max-width: 500px;
+            z-index: 101;
+            cursor: default;
+            pointer-events: auto;
+        }
+        .topic-card.focused:hover { transform: translate(-50%, -50%) scale(1.05); }
+
+        .topic-card.focused .skills-content { display: block; opacity: 1; }
+
+        .close-topic {
+            position: absolute; top: 16px; right: 16px;
+            background: none; border: none; cursor: pointer;
+            color: #999; display: none; padding: 8px; z-index: 2;
+        }
+        .topic-card.focused .close-topic { display: block; }
+        .close-topic:hover { color: var(--text-main); }
+
+        .topics-grid-container { position: relative; }
+
     </style>
 </head>
 <body>
 
+<nav class="main-nav">
+    <div class="strive-logo-container">
+        <img src="image_1.png" alt="Strive Logo">
+    </div>
+    <div class="user-controls">
+        <span style="font-weight: 500; font-size: 0.95rem; color:var(--text-muted)">Grade 6 Student</span>
+        <div class="user-avatar">JS</div>
+    </div>
+</nav>
+
+<div class="overlay" onclick="closeTopic()"></div>
+
 <div class="container">
-    <header>
-        <h1>Mastery Map</h1>
-        <p>Grade 6 Mathematics • Common Core Standards</p>
+    <header class="dash-header">
+        <h1>Welcome to Grade 6</h1>
+        <p>Explore your math learning outcomes</p>
     </header>
 
-    <div class="bento-grid">
-        <div class="topic-card" onclick="toggleTopic(this)">
-            <div class="icon-wrap" style="color: var(--accent-blue);"><i data-lucide="pie-chart"></i></div>
-            <h3>Ratios & Proportions</h3>
-            <p>Understand ratio concepts and use ratio reasoning to solve problems.</p>
-            <div class="skills-overlay">
-                <div class="skill-node"><div class="dot"></div> Concept of unit rate a/b</div>
-                <div class="skill-node"><div class="dot"></div> Tables of equivalent ratios</div>
-                <div class="skill-node"><div class="dot"></div> Percent as a rate per 100</div>
-                <div class="skill-node"><div class="dot"></div> Converting measurement units</div>
+    <div class="topics-grid-container">
+        <div class="topics-grid">
+            <div class="topic-card" onclick="focusTopic(this)">
+                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
+                <div class="icon-wrap"><i data-lucide="percent"></i></div>
+                <h3>Ratios & Proportions</h3>
+                <p>Understanding concepts of ratio and using ratio reasoning to solve problems.</p>
+                
+                <div class="skills-content">
+                    <ul class="skill-list">
+                        <li class="skill-item"><div class="dot"></div>Ratios and rates</li>
+                        <li class="skill-item"><div class="dot"></div>Ratio tables & graphs</li>
+                        <li class="skill-item"><div class="dot"></div>Compare ratios and solve rate problems</li>
+                        <li class="skill-item"><div class="dot"></div>Percent concepts & calculation</li>
+                    </ul>
+                </div>
+                <div class="strive-accent"></div>
             </div>
-        </div>
 
-        <div class="topic-card" onclick="toggleTopic(this)">
-            <div class="icon-wrap" style="color: var(--accent-purple);"><i data-lucide="layers"></i></div>
-            <h3>The Number System</h3>
-            <p>Multi-digit division, fraction operations, and rational numbers.</p>
-            <div class="skills-overlay">
-                <div class="skill-node"><div class="dot"></div> Dividing fractions by fractions</div>
-                <div class="skill-node"><div class="dot"></div> Fluently divide multi-digit numbers</div>
-                <div class="skill-node"><div class="dot"></div> Greatest common factor & LCM</div>
-                <div class="skill-node"><div class="dot"></div> Rational numbers on a number line</div>
-            </div>
-        </div>
+            <div class="topic-card" onclick="focusTopic(this)">
+                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="calculator"></i></button>
+                <div class="icon-wrap"><i data-lucide="binary"></i></div>
+                <h3>The Number System</h3>
+                <p>Fluency with multiplication and division of rational numbers and fractions.</p>
 
-        <div class="topic-card" onclick="toggleTopic(this)">
-            <div class="icon-wrap" style="color: var(--accent-pink);"><i data-lucide="binary"></i></div>
-            <h3>Expressions & Equations</h3>
-            <p>Moving from arithmetic to algebraic thinking and variables.</p>
-            <div class="skills-overlay">
-                <div class="skill-node"><div class="dot"></div> Whole-number exponents</div>
-                <div class="skill-node"><div class="dot"></div> Algebraic expressions with letters</div>
-                <div class="skill-node"><div class="dot"></div> Equivalent expressions</div>
-                <div class="skill-node"><div class="dot"></div> One-variable equations & inequalities</div>
+                <div class="skills-content">
+                    <ul class="skill-list">
+                        <li class="skill-item"><div class="dot"></div>Divide fractions by fractions</li>
+                        <li class="skill-item"><div class="dot"></div>Multi-digit division & decimal operations</li>
+                        <li class="skill-item"><div class="dot"></div>Common factors and multiples</li>
+                        <li class="skill-item"><div class="dot"></div>Positive & negative numbers</li>
+                    </ul>
+                </div>
+                <div class="strive-accent"></div>
             </div>
-        </div>
 
-        <div class="topic-card" onclick="toggleTopic(this)">
-            <div class="icon-wrap" style="color: #fbbf24;"><i data-lucide="shapes"></i></div>
-            <h3>Geometry</h3>
-            <p>Solve real-world problems involving area, surface area, and volume.</p>
-            <div class="skills-overlay">
-                <div class="skill-node"><div class="dot"></div> Area of right triangles & polygons</div>
-                <div class="skill-node"><div class="dot"></div> Volume of right rectangular prisms</div>
-                <div class="skill-node"><div class="dot"></div> Polygons in the coordinate plane</div>
-                <div class="skill-node"><div class="dot"></div> Nets of three-dimensional figures</div>
+            <div class="topic-card" onclick="focusTopic(this)">
+                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="sigma"></i></button>
+                <div class="icon-wrap"><i data-lucide="equal"></i></div>
+                <h3>Expressions & Equations</h3>
+                <p>Move from arithmetic to working with variables and algebraic expressions.</p>
+
+                <div class="skills-content">
+                    <ul class="skill-list">
+                        <li class="skill-item"><div class="dot"></div>Algebraic expressions with exponents</li>
+                        <li class="skill-item"><div class="dot"></div>Writing expressions for real situations</li>
+                        <li class="skill-item"><div class="dot"></div>Understand and solve simple equations</li>
+                        <li class="skill-item"><div class="dot"></div>Represent inequalities</li>
+                    </ul>
+                </div>
+                <div class="strive-accent"></div>
             </div>
+
+            <div class="topic-card" onclick="focusTopic(this)">
+                <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="triangle"></i></button>
+                <div class="icon-wrap"><i data-lucide="shapes"></i></div>
+                <h3>Geometry</h3>
+                <p>Solve real-world problems involving area, surface area, and volume.</p>
+
+                <div class="skills-content">
+                    <ul class="skill-list">
+                        <li class="skill-item"><div class="dot"></div>Area of triangles, quadrilaterals & polygons</li>
+                        <li class="skill-item"><div class="dot"></div>Polygons on the coordinate plane</li>
+                        <li class="skill-item"><div class="dot"></div>Volume of prisms (fractional edges)</li>
+                        <li class="skill-item"><div class="dot"></div>Nets and surface area of 3D figures</li>
+                    </ul>
+                </div>
+                <div class="strive-accent"></div>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -185,13 +308,33 @@
 <script>
     lucide.createIcons();
 
-    function toggleTopic(card) {
-        // Close other cards for a clean "accordion" feel, or remove this to allow multiple open
-        document.querySelectorAll('.topic-card').forEach(c => {
-            if (c !== card) c.classList.remove('active');
-        });
-        card.classList.toggle('active');
+    let currentlyFocusedCard = null;
+
+    function focusTopic(card) {
+        if (currentlyFocusedCard === card) return; // Already focused
+        
+        if (currentlyFocusedCard) {
+            closeTopic();
+        }
+
+        currentlyFocusedCard = card;
+        document.body.classList.add('topic-open');
+        card.classList.add('focused');
     }
+
+    function closeTopic() {
+        if (!currentlyFocusedCard) return;
+
+        currentlyFocusedCard.classList.remove('focused');
+        document.body.classList.remove('topic-open');
+        currentlyFocusedCard = null;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape" && currentlyFocusedCard) {
+            closeTopic();
+        }
+    });
 </script>
 </body>
 </html>
