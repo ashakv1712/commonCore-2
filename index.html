@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strive Math | Grade 6</title>
+    <title>Strive Math | Learning Roadmap</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --strive-navy: #000F3C;
             --strive-gradient: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
-            --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            --transition-speed: 0.5s;
+            --easing: cubic-bezier(0.2, 1, 0.3, 1);
         }
 
         body {
@@ -18,177 +19,156 @@
             color: var(--strive-navy);
             margin: 0;
             min-height: 100vh;
-            /* Polished, non-white background using Strive colors at very low opacity */
-            background-color: #f8f9ff;
+            /* Vibrant Mesh Background */
+            background-color: #fdfdff;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(249, 65, 134, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(68, 207, 255, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 182, 54, 0.08) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(196, 79, 255, 0.08) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(249, 65, 134, 0.1) 0px, transparent 40%),
+                radial-gradient(at 100% 0%, rgba(68, 207, 255, 0.1) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(255, 182, 54, 0.1) 0px, transparent 40%),
+                radial-gradient(at 0% 100%, rgba(196, 79, 255, 0.1) 0px, transparent 40%);
             background-attachment: fixed;
-            overflow-x: hidden;
         }
 
-        nav {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-placeholder { height: 40px; }
+        nav { padding: 20px 50px; }
+        .logo-box img { height: 38px; }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        /* GRADIENT TITLE */
         .main-title {
             text-align: center;
             font-size: 3.5rem;
             font-weight: 800;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             background: var(--strive-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
         }
 
+        /* GRID LOGIC: Balances 4 as 2x2, 6 as 3x2, etc. */
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            perspective: 1000px;
+            justify-content: center; /* Centers cards if row is incomplete */
         }
 
-        /* CARD STYLING */
-        .card-anchor { position: relative; height: 220px; }
+        /* ANCHOR: Keeps the grid layout from collapsing when card floats */
+        .card-anchor {
+            position: relative;
+            height: 240px;
+            width: 100%;
+        }
 
         .topic-card {
             background: white;
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: 0 10px 30px rgba(0, 15, 60, 0.05);
-            border: 1px solid rgba(0, 15, 60, 0.05);
+            border-radius: 28px;
+            padding: 35px;
+            border: 1px solid rgba(0, 15, 60, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 15, 60, 0.04);
             cursor: pointer;
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            position: absolute; /* Controlled by JS during expansion */
+            top: 0; left: 0; width: 100%; height: 100%;
             box-sizing: border-box;
-            transition: var(--transition);
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 10;
+            overflow: hidden;
+            /* Fix for text blurriness */
             backface-visibility: hidden;
-            -webkit-font-smoothing: antialiased; /* Prevents blur */
+            transform: translateZ(0);
         }
 
         .topic-card:hover:not(.active) {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 15, 60, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 15, 60, 0.08);
         }
 
         .icon-box {
-            width: 48px; height: 48px;
-            background: #f0f3ff;
-            border-radius: 14px;
+            width: 50px; height: 50px;
+            background: #f4f6ff;
+            border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 20px;
             color: #6464FF;
         }
 
-        .topic-card h3 { margin: 0 0 10px 0; font-size: 1.4rem; font-weight: 700; }
-        .topic-card p { margin: 0; color: #5A698F; line-height: 1.5; font-size: 0.95rem; }
+        .topic-card h3 { margin: 0 0 12px 0; font-size: 1.5rem; font-weight: 700; }
+        .topic-card p { margin: 0; color: #5A698F; line-height: 1.6; font-size: 1rem; }
 
-        /* ACTIVE STATE - CENTERED FOCUS */
+        /* EXPANDED STATE */
         .topic-card.active {
-            position: fixed;
-            top: 50% !important;
-            left: 50% !important;
-            width: 500px !important;
-            height: auto !important;
-            min-height: 400px;
-            transform: translate(-50%, -50%) !important;
-            z-index: 1000;
+            position: fixed !important;
+            z-index: 2000;
             cursor: default;
-            border: 2px solid transparent;
+            border: 2.5px solid transparent;
             border-image: var(--strive-gradient);
             border-image-slice: 1;
+            /* We don't use transform: translate here to keep text crisp */
         }
 
-        /* SKILLS LIST (Hidden by default) */
         .skills-list {
             display: none;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            animation: fadeIn 0.5s ease forwards;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #f0f2f5;
+            animation: fadeIn 0.4s ease forwards;
         }
 
         .topic-card.active .skills-list { display: block; }
 
         .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-weight: 500;
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 15px; font-weight: 600; font-size: 1.05rem;
         }
 
         .dot { 
-            width: 8px; height: 8px; border-radius: 50%; 
+            width: 10px; height: 10px; border-radius: 50%; 
             background: var(--strive-gradient);
         }
 
         .close-btn {
-            position: absolute; top: 20px; right: 20px;
-            opacity: 0; pointer-events: none;
-            background: #f0f3ff; border: none; padding: 8px;
-            border-radius: 50%; cursor: pointer; transition: 0.3s;
+            position: absolute; top: 25px; right: 25px;
+            background: #f0f3ff; border: none; padding: 10px;
+            border-radius: 50%; cursor: pointer; display: none;
         }
-
-        .topic-card.active .close-btn { opacity: 1; pointer-events: auto; }
+        .topic-card.active .close-btn { display: block; }
 
         /* OVERLAY */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 15, 60, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 15, 60, 0.3);
+            backdrop-filter: blur(10px);
             opacity: 0; visibility: hidden;
-            transition: 0.4s; z-index: 999;
+            transition: 0.5s; z-index: 1500;
         }
         body.modal-open .overlay { opacity: 1; visibility: visible; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo-placeholder">
-        <img src="image_1.png" alt="Strive Logo" style="height: 100%;">
-    </div>
-</nav>
+<nav><div class="logo-box"><img src="image_1.png" alt="Strive"></div></nav>
 
 <div class="overlay" onclick="closeAll()"></div>
 
 <div class="container">
     <h1 class="main-title">Grade 6 Learning Skills</h1>
 
-    <div class="topics-grid">
+    <div class="topics-grid" id="mainGrid">
         <div class="card-anchor">
             <div class="topic-card" onclick="expandCard(this)">
                 <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
                 <div class="icon-box"><i data-lucide="percent"></i></div>
                 <h3>Ratios & Proportions</h3>
-                <p>Understand ratio concepts and use ratio reasoning to solve problems.</p>
+                <p>Understanding concepts of ratio and using ratio reasoning to solve problems.</p>
                 <div class="skills-list">
-                    <div class="skill-item"><div class="dot"></div> Unit rates & ratios</div>
-                    <div class="skill-item"><div class="dot"></div> Ratio tables & graphing</div>
-                    <div class="skill-item"><div class="dot"></div> Percent of a quantity</div>
-                    <div class="skill-item"><div class="dot"></div> Unit conversions</div>
+                    <div class="skill-item"><div class="dot"></div> Unit rates & Ratios</div>
+                    <div class="skill-item"><div class="dot"></div> Ratio tables & Graphing</div>
+                    <div class="skill-item"><div class="dot"></div> Percents & Real-world apps</div>
                 </div>
             </div>
         </div>
@@ -200,10 +180,9 @@
                 <h3>The Number System</h3>
                 <p>Fluency with multiplication and division of rational numbers and fractions.</p>
                 <div class="skills-list">
-                    <div class="skill-item"><div class="dot"></div> Divide fractions by fractions</div>
-                    <div class="skill-item"><div class="dot"></div> Multi-digit decimal operations</div>
-                    <div class="skill-item"><div class="dot"></div> LCM and GCF</div>
-                    <div class="skill-item"><div class="dot"></div> Rational numbers on a line</div>
+                    <div class="skill-item"><div class="dot"></div> Multi-digit division</div>
+                    <div class="skill-item"><div class="dot"></div> Decimal operations</div>
+                    <div class="skill-item"><div class="dot"></div> Negative numbers & Absolute value</div>
                 </div>
             </div>
         </div>
@@ -211,14 +190,13 @@
         <div class="card-anchor">
             <div class="topic-card" onclick="expandCard(this)">
                 <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
-                <div class="icon-box"><i data-lucide="variable"></i></div>
+                <div class="icon-box"><i data-lucide="sigma"></i></div>
                 <h3>Expressions & Equations</h3>
-                <p>Move from arithmetic to algebraic thinking and variable usage.</p>
+                <p>Writing and solving algebraic expressions and one-variable equations.</p>
                 <div class="skills-list">
-                    <div class="skill-item"><div class="dot"></div> Exponents & variables</div>
-                    <div class="skill-item"><div class="dot"></div> Write & evaluate expressions</div>
-                    <div class="skill-item"><div class="dot"></div> Solve one-variable equations</div>
-                    <div class="skill-item"><div class="dot"></div> Dependent & independent variables</div>
+                    <div class="skill-item"><div class="dot"></div> Exponents & Variables</div>
+                    <div class="skill-item"><div class="dot"></div> Solve for X</div>
+                    <div class="skill-item"><div class="dot"></div> Independent vs Dependent variables</div>
                 </div>
             </div>
         </div>
@@ -228,12 +206,11 @@
                 <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
                 <div class="icon-box"><i data-lucide="shapes"></i></div>
                 <h3>Geometry</h3>
-                <p>Solve real-world problems involving area, surface area, and volume.</p>
+                <p>Solving problems involving area, surface area, and volume.</p>
                 <div class="skills-list">
                     <div class="skill-item"><div class="dot"></div> Area of triangles & polygons</div>
-                    <div class="skill-item"><div class="dot"></div> Volume with fractional edges</div>
-                    <div class="skill-item"><div class="dot"></div> Nets of 3D figures</div>
-                    <div class="skill-item"><div class="dot"></div> Coordinate plane geometry</div>
+                    <div class="skill-item"><div class="dot"></div> Surface area with nets</div>
+                    <div class="skill-item"><div class="dot"></div> Volume of rectangular prisms</div>
                 </div>
             </div>
         </div>
@@ -246,49 +223,67 @@
 
     function expandCard(card) {
         if (card.classList.contains('active')) return;
-        
         activeCard = card;
+
         const rect = card.getBoundingClientRect();
         
-        // Save original position
+        // Save original position to the element's memory
         card.dataset.origTop = rect.top;
         card.dataset.origLeft = rect.left;
         card.dataset.origWidth = rect.width;
         card.dataset.origHeight = rect.height;
 
-        // Set initial fixed position to prevent jump
+        // Set initial state
+        card.style.position = 'fixed';
         card.style.top = rect.top + 'px';
         card.style.left = rect.left + 'px';
         card.style.width = rect.width + 'px';
         card.style.height = rect.height + 'px';
+        card.style.margin = '0';
         
-        setTimeout(() => {
-            document.body.classList.add('modal-open');
-            card.classList.add('active');
-        }, 10);
+        // Trigger browser reflow
+        card.offsetHeight;
+
+        // ANIMATE TO CENTER
+        document.body.classList.add('modal-open');
+        card.classList.add('active');
+        
+        // Use direct pixel values for the center to avoid scale/blur
+        const targetWidth = Math.min(window.innerWidth * 0.9, 550);
+        card.style.transition = 'all 0.5s cubic-bezier(0.2, 1, 0.3, 1)';
+        card.style.top = '50%';
+        card.style.left = '50%';
+        card.style.width = targetWidth + 'px';
+        card.style.height = 'auto';
+        card.style.minHeight = '450px';
+        card.style.transform = 'translate(-50%, -50%)';
     }
 
     function closeAll() {
         if (!activeCard) return;
-
         const card = activeCard;
+
         document.body.classList.remove('modal-open');
         card.classList.remove('active');
 
-        // Move back to original coordinates
+        // ANIMATE BACK TO START
         card.style.top = card.dataset.origTop + 'px';
         card.style.left = card.dataset.origLeft + 'px';
         card.style.width = card.dataset.origWidth + 'px';
         card.style.height = card.dataset.origHeight + 'px';
+        card.style.minHeight = '0px';
+        card.style.transform = 'translate(0, 0)';
 
         setTimeout(() => {
-            // Clean up inline styles to let CSS Grid take back control
-            card.style.top = '';
-            card.style.left = '';
-            card.style.width = '';
-            card.style.height = '';
+            // Reset to grid defaults
+            card.style.position = 'absolute';
+            card.style.top = '0';
+            card.style.left = '0';
+            card.style.width = '100%';
+            card.style.height = '100%';
+            card.style.transition = '';
             activeCard = null;
-        }, 600);
+        }, 500);
     }
 </script>
 </body>
