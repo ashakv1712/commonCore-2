@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Mastery | Grade 6 Dashboard</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --bg: #F9FAFB;
+            --card: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
+        p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* Competency Card */
+        .domain-card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid #E5E7EB;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .domain-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 20px;
+            user-select: none;
+        }
+
+        .domain-header:hover { background-color: #FBFBFF; }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: #EEF2FF;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .domain-info { flex: 1; }
+        .domain-title { font-weight: 700; font-size: 1.25rem; margin-bottom: 4px; }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 120px;
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 10px;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+
+        /* Content Area */
+        .skills-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            background: #FCFCFD;
+            border-top: 0 solid #EEE;
+        }
+
+        .domain-card.active .skills-list {
+            max-height: 1000px;
+            border-top-width: 1px;
+            padding: 16px 24px 24px 88px;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .skill-item:last-child { border-bottom: none; }
+
+        .skill-label { font-size: 0.95rem; font-weight: 500; color: #374151; }
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .mastered { background: #D1FAE5; color: #065F46; }
+        .in-progress { background: #FEF3C7; color: #92400E; }
+
+        .chevron { transition: transform 0.3s ease; color: var(--text-muted); }
+        .domain-card.active .chevron { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Grade 6 Math Roadmap</h1>
+        <p>Common Core Standards Mastery & Learning Outcomes</p>
+    </header>
+
+    <div id="dashboard">
+        <div class="domain-card">
+            <div class="domain-header" onclick="toggleCard(this)">
+                <div class="icon-box"><i data-lucide="percent"></i></div>
+                <div class="domain-info">
+                    <div class="domain-title">Ratios & Proportions</div>
+                    <div class="progress-container"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+                <i data-lucide="chevron-down" class="chevron"></i>
+            </div>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <span class="skill-label">Understand ratio concepts & language</span>
+                    <span class="badge mastered">Mastered</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-label">Unit rates & unit pricing</span>
+                    <span class="badge mastered">Mastered</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-label">Solving percent problems</span>
+                    <span class="badge in-progress">75%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="domain-card">
+            <div class="domain-header" onclick="toggleCard(this)">
+                <div class="icon-box"><i data-lucide="binary"></i></div>
+                <div class="domain-info">
+                    <div class="domain-title">The Number System</div>
+                    <div class="progress-container"><div class="progress-fill" style="width: 40%;"></div></div>
+                </div>
+                <i data-lucide="chevron-down" class="chevron"></i>
+            </div>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <span class="skill-label">Dividing fractions by fractions</span>
+                    <span class="badge mastered">Mastered</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-label">Fluently add, subtract, multiply, and divide multi-digit decimals</span>
+                    <span class="badge in-progress">40%</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-label">Understand positive and negative numbers</span>
+                    <span class="badge in-progress">Started</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="domain-card">
+            <div class="domain-header" onclick="toggleCard(this)">
+                <div class="icon-box"><i data-lucide="variable"></i></div>
+                <div class="domain-info">
+                    <div class="domain-title">Expressions & Equations</div>
+                    <div class="progress-container"><div class="progress-fill" style="width: 10%;"></div></div>
+                </div>
+                <i data-lucide="chevron-down" class="chevron"></i>
+            </div>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <span class="skill-label">Write and evaluate numerical expressions involving whole-number exponents</span>
+                    <span class="badge in-progress">10%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    function toggleCard(element) {
+        const card = element.parentElement;
+        card.classList.toggle('active');
+    }
+</script>
+</body>
+</html>
