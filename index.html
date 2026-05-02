@@ -3,400 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strive Math | Grade 6 Dashboard</title>
+    <title>Strive Math | Grade 6</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Avenir:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* STREIVE BRAND COLORS */
-            --strive-dark-navy: #000F3C;
-            --strive-muted-blue: #5A698F;
-            --card-bg: #FFFFFF;
-            
-            /* The main gradient colors */
-            --g-pink: #F94186;
-            --g-purple: #C44FFF;
-            --g-blue: #6464FF;
-            --g-cyan: #44CFFF;
-            --g-gold: #FFB636;
-
-            /* Page background and shadow */
-            --shadow-light: 0 10px 15px -3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.01);
-            --transition-smooth: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            --strive-navy: #000F3C;
+            --strive-gradient: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
+            --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         body {
-            font-family: 'Avenir', 'Helvetica Neue', sans-serif;
-            color: var(--strive-dark-navy);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--strive-navy);
             margin: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            
-            /* GENTLE STRIVE GRADIENT BACKGROUND */
-            background-color: #fdfcff;
+            /* Polished, non-white background using Strive colors at very low opacity */
+            background-color: #f8f9ff;
             background-image: 
-                radial-gradient(at 10% 20%, rgba(249, 65, 134, 0.04) 0px, transparent 50%),
-                radial-gradient(at 90% 10%, rgba(100, 100, 255, 0.03) 0px, transparent 50%),
-                radial-gradient(at 80% 90%, rgba(255, 182, 54, 0.03) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(196, 79, 255, 0.02) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(249, 65, 134, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(68, 207, 255, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 182, 54, 0.08) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(196, 79, 255, 0.08) 0px, transparent 50%);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* Fixed Navigation Header */
-        nav.main-nav {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(0, 15, 60, 0.05);
-            padding: 16px 20px;
+        nav {
+            padding: 20px 40px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .strive-logo-container {
-            height: 36px;
-            width: auto;
-            display: flex;
             align-items: center;
         }
 
-        .strive-logo-container img {
-            height: 100%;
-            width: auto;
-        }
+        .logo-placeholder { height: 40px; }
 
-        .user-controls {
-            display: flex;
-            gap: 16px;
-        }
-        .user-avatar {
-            width: 36px; height: 36px;
-            background: rgba(100, 100, 255, 0.1); 
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--strive-dark-navy); font-weight: 700;
-        }
-
-        /* Main Content Area */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
-            flex: 1;
+            padding: 40px 20px;
         }
 
-        header.dash-header {
+        /* GRADIENT TITLE */
+        .main-title {
             text-align: center;
-            margin-bottom: 80px;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 60px;
+            background: var(--strive-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
-        header.dash-header h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--strive-dark-navy);
-        }
-
-        header.dash-header p { color: var(--strive-muted-blue); font-size: 1.2rem; }
-
-        /* The Grid */
-        .topics-grid-container {
-            position: relative;
-        }
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 24px;
-            justify-content: center; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
         }
 
-        /* CARD ANIMATION STATE & TRANSITION */
-        .card-wrapper {
-            position: relative;
-            z-index: 1;
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
+        /* CARD STYLING */
+        .card-anchor { position: relative; height: 220px; }
 
-        /* TOPIC CARD STYLING & BASE ANIMATION */
         .topic-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 15, 60, 0.05);
-            border-radius: 20px;
+            background: white;
+            border-radius: 24px;
             padding: 32px;
-            cursor: pointer;
-            box-shadow: var(--shadow-light);
-            
-            /* CSS Animation Properties for the "pop" from place */
-            transition: var(--transition-smooth);
-            will-change: transform, box-shadow, z-index, position, top, left, width, max-width;
-            overflow: hidden;
-        }
-
-        /* Hover: Minimal popup from position */
-        .topic-card:not(.focused):hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.04);
-            border-bottom: 4px solid transparent;
-            border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
-            border-image-slice: 1;
-            padding-bottom: 28px;
-        }
-
-        .icon-wrap {
-            width: 52px; height: 52px;
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 15, 60, 0.05);
             border: 1px solid rgba(0, 15, 60, 0.05);
-            background: rgba(100, 100, 255, 0.03); 
+            cursor: pointer;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            transition: var(--transition);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased; /* Prevents blur */
         }
 
-        .topic-card .icon-wrap i { color: var(--strive-dark-navy); width: 26px; height: 26px; }
+        .topic-card:hover:not(.active) {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 15, 60, 0.1);
+        }
 
-        .topic-card h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 700; color: var(--strive-dark-navy); }
-        .topic-card p { color: var(--strive-muted-blue); font-size: 1rem; line-height: 1.6; margin: 0; }
+        .icon-box {
+            width: 48px; height: 48px;
+            background: #f0f3ff;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            color: #6464FF;
+        }
 
-        /* Focused Content Area */
-        .skills-content {
+        .topic-card h3 { margin: 0 0 10px 0; font-size: 1.4rem; font-weight: 700; }
+        .topic-card p { margin: 0; color: #5A698F; line-height: 1.5; font-size: 0.95rem; }
+
+        /* ACTIVE STATE - CENTERED FOCUS */
+        .topic-card.active {
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            width: 500px !important;
+            height: auto !important;
+            min-height: 400px;
+            transform: translate(-50%, -50%) !important;
+            z-index: 1000;
+            cursor: default;
+            border: 2px solid transparent;
+            border-image: var(--strive-gradient);
+            border-image-slice: 1;
+        }
+
+        /* SKILLS LIST (Hidden by default) */
+        .skills-list {
             display: none;
-            margin-top: 24px;
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        .skill-list { list-style: none; padding: 0; margin: 0; }
+        .topic-card.active .skills-list { display: block; }
+
         .skill-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 0; border-bottom: 1px solid rgba(0, 15, 60, 0.03);
-            font-size: 1rem; color: var(--strive-dark-navy);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
-        .skill-item:last-child { border-bottom: none; }
-        
-        /* Branded Dot (Rainbow Gradient) from image_0.png */
+
         .dot { 
             width: 8px; height: 8px; border-radius: 50%; 
-            background: linear-gradient(45deg, #F94186, #C44FFF, #6464FF, #44CFFF, #FFB636);
+            background: var(--strive-gradient);
         }
 
-        /* Close Button inside Focused Card */
-        .close-topic {
-            position: absolute; top: 16px; right: 16px;
-            background: none; border: none; cursor: pointer;
-            color: #999; display: none; padding: 8px; z-index: 3;
-        }
-        .close-topic:hover { color: var(--strive-dark-navy); }
-
-        /* THE ANIMATION CORE */
-        .topic-card.focused {
-            display: block;
-            position: fixed;
-            z-index: 101;
-            top: 50%; left: 50%;
-            width: 90%; max-width: 500px;
-            transform: translate(-50%, -50%) scale(1.05) !important; /* Forces centering and slight expansion */
-            
-            box-shadow: 0 40px 60px -20px rgba(0,0,0,0.1);
-            cursor: default;
-            pointer-events: auto;
-            
-            /* Apply the rainbow gradient border when focused */
-            border: 2px solid transparent;
-            border-image: linear-gradient(90deg, #F94186 0%, #C44FFF 25%, #6464FF 50%, #44CFFF 75%, #FFB636 100%);
-            border-image-slice: 1;
-            padding-bottom: 30px;
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            opacity: 0; pointer-events: none;
+            background: #f0f3ff; border: none; padding: 8px;
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
 
-        .topic-card.focused .skills-content { display: block; opacity: 1; }
-        .topic-card.focused .close-topic { display: block; }
+        .topic-card.active .close-btn { opacity: 1; pointer-events: auto; }
 
-        /* Dim Background Overlay */
+        /* OVERLAY */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,15,60,0.1); /* Subtler dim for softer gradient feel */
-            backdrop-filter: blur(4px);
-            opacity: 0; visibility: hidden; z-index: 100;
-            transition: var(--transition-smooth);
+            background: rgba(0, 15, 60, 0.4);
+            backdrop-filter: blur(8px);
+            opacity: 0; visibility: hidden;
+            transition: 0.4s; z-index: 999;
         }
+        body.modal-open .overlay { opacity: 1; visibility: visible; }
 
-        body.topic-open { overflow: hidden; }
-        body.topic-open .overlay { opacity: 1; visibility: visible; }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<nav class="main-nav">
-    <div class="strive-logo-container">
-        <img src="image_1.png" alt="Strive Logo">
-    </div>
-    <div class="user-controls">
-        <span style="font-weight: 500; font-size: 0.95rem; color:var(--strive-muted-blue)">Grade 6 Student</span>
-        <div class="user-avatar">JS</div>
+<nav>
+    <div class="logo-placeholder">
+        <img src="image_1.png" alt="Strive Logo" style="height: 100%;">
     </div>
 </nav>
 
-<div class="overlay" onclick="closeTopic()"></div>
+<div class="overlay" onclick="closeAll()"></div>
 
 <div class="container">
-    <header class="dash-header">
-        <h1>Welcome to Grade 6</h1>
-        <p>Explore your math learning outcomes</p>
-    </header>
+    <h1 class="main-title">Grade 6 Learning Skills</h1>
 
-    <div class="topics-grid-container">
-        <div class="topics-grid">
-            
-            <div class="card-wrapper" id="wrapper-1">
-                <div class="topic-card" id="card-1" onclick="focusTopic(this, 1)">
-                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
-                    <div class="icon-wrap"><i data-lucide="percent"></i></div>
-                    <h3>Ratios & Proportions</h3>
-                    <p>Understanding concepts of ratio and using ratio reasoning to solve problems.</p>
-                    
-                    <div class="skills-content">
-                        <ul class="skill-list">
-                            <li class="skill-item"><div class="dot"></div>Ratios and rates</li>
-                            <li class="skill-item"><div class="dot"></div>Ratio tables & graphs</li>
-                            <li class="skill-item"><div class="dot"></div>Compare ratios and solve rate problems</li>
-                            <li class="skill-item"><div class="dot"></div>Percent concepts & calculation</li>
-                        </ul>
-                    </div>
+    <div class="topics-grid">
+        <div class="card-anchor">
+            <div class="topic-card" onclick="expandCard(this)">
+                <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
+                <div class="icon-box"><i data-lucide="percent"></i></div>
+                <h3>Ratios & Proportions</h3>
+                <p>Understand ratio concepts and use ratio reasoning to solve problems.</p>
+                <div class="skills-list">
+                    <div class="skill-item"><div class="dot"></div> Unit rates & ratios</div>
+                    <div class="skill-item"><div class="dot"></div> Ratio tables & graphing</div>
+                    <div class="skill-item"><div class="dot"></div> Percent of a quantity</div>
+                    <div class="skill-item"><div class="dot"></div> Unit conversions</div>
                 </div>
             </div>
+        </div>
 
-            <div class="card-wrapper" id="wrapper-2">
-                <div class="topic-card" id="card-2" onclick="focusTopic(this, 2)">
-                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
-                    <div class="icon-wrap"><i data-lucide="binary"></i></div>
-                    <h3>The Number System</h3>
-                    <p>Fluency with multiplication and division of rational numbers and fractions.</p>
-
-                    <div class="skills-content">
-                        <ul class="skill-list">
-                            <li class="skill-item"><div class="dot"></div>Divide fractions by fractions</li>
-                            <li class="skill-item"><div class="dot"></div>Multi-digit division & decimal operations</li>
-                            <li class="skill-item"><div class="dot"></div>Common factors and multiples</li>
-                            <li class="skill-item"><div class="dot"></div>Positive & negative numbers</li>
-                        </ul>
-                    </div>
+        <div class="card-anchor">
+            <div class="topic-card" onclick="expandCard(this)">
+                <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
+                <div class="icon-box"><i data-lucide="binary"></i></div>
+                <h3>The Number System</h3>
+                <p>Fluency with multiplication and division of rational numbers and fractions.</p>
+                <div class="skills-list">
+                    <div class="skill-item"><div class="dot"></div> Divide fractions by fractions</div>
+                    <div class="skill-item"><div class="dot"></div> Multi-digit decimal operations</div>
+                    <div class="skill-item"><div class="dot"></div> LCM and GCF</div>
+                    <div class="skill-item"><div class="dot"></div> Rational numbers on a line</div>
                 </div>
             </div>
+        </div>
 
-            <div class="card-wrapper" id="wrapper-3">
-                <div class="topic-card" id="card-3" onclick="focusTopic(this, 3)">
-                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
-                    <div class="icon-wrap"><i data-lucide="equal"></i></div>
-                    <h3>Expressions & Equations</h3>
-                    <p>Move from arithmetic to working with variables and algebraic expressions.</p>
-
-                    <div class="skills-content">
-                        <ul class="skill-list">
-                            <li class="skill-item"><div class="dot"></div>Algebraic expressions with exponents</li>
-                            <li class="skill-item"><div class="dot"></div>Writing expressions for real situations</li>
-                            <li class="skill-item"><div class="dot"></div>Understand and solve simple equations</li>
-                            <li class="skill-item"><div class="dot"></div>Represent inequalities</li>
-                        </ul>
-                    </div>
+        <div class="card-anchor">
+            <div class="topic-card" onclick="expandCard(this)">
+                <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
+                <div class="icon-box"><i data-lucide="variable"></i></div>
+                <h3>Expressions & Equations</h3>
+                <p>Move from arithmetic to algebraic thinking and variable usage.</p>
+                <div class="skills-list">
+                    <div class="skill-item"><div class="dot"></div> Exponents & variables</div>
+                    <div class="skill-item"><div class="dot"></div> Write & evaluate expressions</div>
+                    <div class="skill-item"><div class="dot"></div> Solve one-variable equations</div>
+                    <div class="skill-item"><div class="dot"></div> Dependent & independent variables</div>
                 </div>
             </div>
+        </div>
 
-            <div class="card-wrapper" id="wrapper-4">
-                <div class="topic-card" id="card-4" onclick="focusTopic(this, 4)">
-                    <button class="close-topic" onclick="event.stopPropagation(); closeTopic();"><i data-lucide="x"></i></button>
-                    <div class="icon-wrap"><i data-lucide="shapes"></i></div>
-                    <h3>Geometry</h3>
-                    <p>Solve real-world problems involving area, surface area, and volume.</p>
-
-                    <div class="skills-content">
-                        <ul class="skill-list">
-                            <li class="skill-item"><div class="dot"></div>Area of triangles, quadrilaterals & polygons</li>
-                            <li class="skill-item"><div class="dot"></div>Polygons on the coordinate plane</li>
-                            <li class="skill-item"><div class="dot"></div>Volume of prisms (fractional edges)</li>
-                            <li class="skill-item"><div class="dot"></div>Nets and surface area of 3D figures</li>
-                        </ul>
-                    </div>
+        <div class="card-anchor">
+            <div class="topic-card" onclick="expandCard(this)">
+                <button class="close-btn" onclick="event.stopPropagation(); closeAll();"><i data-lucide="x"></i></button>
+                <div class="icon-box"><i data-lucide="shapes"></i></div>
+                <h3>Geometry</h3>
+                <p>Solve real-world problems involving area, surface area, and volume.</p>
+                <div class="skills-list">
+                    <div class="skill-item"><div class="dot"></div> Area of triangles & polygons</div>
+                    <div class="skill-item"><div class="dot"></div> Volume with fractional edges</div>
+                    <div class="skill-item"><div class="dot"></div> Nets of 3D figures</div>
+                    <div class="skill-item"><div class="dot"></div> Coordinate plane geometry</div>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>
 
 <script>
     lucide.createIcons();
+    let activeCard = null;
 
-    let currentlyFocusedCard = null;
-    let focusedWrapperId = null;
-
-    function focusTopic(card, wrapperId) {
-        if (currentlyFocusedCard === card) return; // Already focused
+    function expandCard(card) {
+        if (card.classList.contains('active')) return;
         
-        // Ensure only one card focuses
-        if (currentlyFocusedCard) {
-            closeTopic();
-        }
-
-        // --- Store current dimensions/position ---
-        const wrapper = document.getElementById('wrapper-' + wrapperId);
+        activeCard = card;
         const rect = card.getBoundingClientRect();
         
-        // This makes the transition smooth by calculating initial state
-        card.style.transition = 'none'; // Disable hover transitions
-        card.style.position = 'fixed';
+        // Save original position
+        card.dataset.origTop = rect.top;
+        card.dataset.origLeft = rect.left;
+        card.dataset.origWidth = rect.width;
+        card.dataset.origHeight = rect.height;
+
+        // Set initial fixed position to prevent jump
         card.style.top = rect.top + 'px';
         card.style.left = rect.left + 'px';
         card.style.width = rect.width + 'px';
-        card.style.transform = 'translate(0, 0)'; // Ensure no initial translate is present
-        card.style.zIndex = '101'; // Place above overlay
+        card.style.height = rect.height + 'px';
         
-        currentlyFocusedCard = card;
-        focusedWrapperId = wrapperId;
-
-        // --- Force browser reflow to apply the initial inline styles ---
-        card.offsetHeight;
-
-        // --- Activate Focus state (triggered by CSS) ---
-        card.style.transition = 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)'; // Restore smooth animation
-        card.classList.add('focused');
-        document.body.classList.add('topic-open');
-    }
-
-    function closeTopic() {
-        if (!currentlyFocusedCard) return;
-
-        currentlyFocusedCard.classList.remove('focused');
-        document.body.classList.remove('topic-open');
-        
-        // Clear the fixed positioning styles so it pops back into the grid
         setTimeout(() => {
-            // Check if still current to avoid issues if another card was clicked quickly
-            if(currentlyFocusedCard){
-                currentlyFocusedCard.style.position = '';
-                currentlyFocusedCard.style.top = '';
-                currentlyFocusedCard.style.left = '';
-                currentlyFocusedCard.style.width = '';
-                currentlyFocusedCard.style.transform = '';
-                currentlyFocusedCard.style.zIndex = '';
-                currentlyFocusedCard.style.transition = ''; // Restore base transition
-                currentlyFocusedCard = null;
-                focusedWrapperId = null;
-            }
-        }, 500); // Wait for the transition out to complete
+            document.body.classList.add('modal-open');
+            card.classList.add('active');
+        }, 10);
     }
 
-    // Escape key closes the focus mode
-    document.addEventListener('keydown', function(e) {
-        if (e.key === "Escape" && currentlyFocusedCard) {
-            closeTopic();
-        }
-    });
+    function closeAll() {
+        if (!activeCard) return;
+
+        const card = activeCard;
+        document.body.classList.remove('modal-open');
+        card.classList.remove('active');
+
+        // Move back to original coordinates
+        card.style.top = card.dataset.origTop + 'px';
+        card.style.left = card.dataset.origLeft + 'px';
+        card.style.width = card.dataset.origWidth + 'px';
+        card.style.height = card.dataset.origHeight + 'px';
+
+        setTimeout(() => {
+            // Clean up inline styles to let CSS Grid take back control
+            card.style.top = '';
+            card.style.left = '';
+            card.style.width = '';
+            card.style.height = '';
+            activeCard = null;
+        }, 600);
+    }
 </script>
 </body>
 </html>
