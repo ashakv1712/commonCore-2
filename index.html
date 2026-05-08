@@ -2,1127 +2,1550 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Strive Math · Grade 7 Curriculum</title>
-<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Inconsolata:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Strive Math · Grade 8 Curriculum</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-/* ─── STRIVE BRAND DESIGN TOKENS ─── */
 :root {
-  /* Strive exact brand colours (from screenshot) */
-  --orange:  #FF6635;
-  --orange2: #FFB39A;
-  --purple:  #7058FF;
-  --pink:    #FF4F84;
-  --amber:   #FFA41C;
-  --green:   #B0EB33;
-  --blue:    #2C81ED;
-  --navy:    #0F1574;
-  --navy-lt: #878AB9;
-
-  /* Strive signature rainbow */
-  --rainbow:     linear-gradient(to right, #FFA41C, #FF4F84, #7058FF, #2C81ED, #B0EB33);
-  --rainbow-cta: linear-gradient(to right, #FFA41C, #FF4F84, #7058FF);
-  --coral-pink:  linear-gradient(to right, #FE6636, #FF4F84 40%, #7058FF 80%);
-
-  /* LIGHT surface (Strive brand — light only mode) */
-  --bg-top:   #FAFAFA;
-  --surface:  rgba(255,255,255,0.80);
-  --surface2: rgba(255,255,255,0.90);
-  --surface3: #FFFFFF;
-  --border:   rgba(15,21,116,0.08);
-  --border2:  rgba(15,21,116,0.15);
-
-  /* Text — Strive light mode */
-  --ink:  #0F1574;
-  --ink2: #575863;
-  --ink3: #878AB9;
-  --ink4: #B1B1C2;
-
-  /* Strive shadows */
-  --sh-sm: 0 1px 4px rgba(15,21,116,0.06);
-  --sh:    0px 8px 30.26px rgba(15,21,116,0.07);
-  --sh-lg: 0px 15px 30px rgba(0,0,0,0.10);
-  --sh-btn: 0px 4px 11px rgba(0,0,0,0.20);
-
-  --r: 16px; --r-lg: 24px; --r-pill: 100px;
-
-  --font:    'Jost', sans-serif;
-  --display: 'Jost', sans-serif;
-  --mono:    'Inconsolata', monospace;
+  --coral:   #E8420A;
+  --teal:    #00C896;
+  --amber:   #F5A623;
+  --blue:    #4A8FFF;
+  --purple:  #C44DFF;
+  --navy:    #060D1C;
+  --navy2:   #0A1528;
+  --navy3:   #0F1E36;
+  --navy4:   #162540;
+  --border:  #1A2E4A;
+  --border2: #243D5C;
+  --text1:   #EEF4FF;
+  --text2:   #94AECB;
+  --text3:   #4A6A8A;
+  --font:    'DM Sans', sans-serif;
+  --mono:    'DM Mono', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font);
-  background: var(--bg-top);
-  color: var(--ink);
+  background: var(--navy);
+  color: var(--text1);
   min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
-/* ─── LIGHT BACKGROUND ─── */
-.bg-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: #FAFAFA;
-}
-/* Soft Strive colour blobs — very subtle on white */
-.bg-canvas::before {
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 55% 45% at 0% 0%,   rgba(255,102,53,0.08)  0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 100% 5%,  rgba(112,88,255,0.07)  0%, transparent 55%),
-    radial-gradient(ellipse 45% 40% at 100% 95%, rgba(44,129,237,0.07)  0%, transparent 55%),
-    radial-gradient(ellipse 40% 35% at 0% 95%,   rgba(255,79,132,0.06)  0%, transparent 50%),
-    radial-gradient(ellipse 30% 30% at 50% 50%,  rgba(255,164,28,0.04)  0%, transparent 50%);
-}
-/* Noise grain — barely visible on white */
-.bg-canvas::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.018;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* dot grid — light navy tint on white */
-.dot-grid {
   position: fixed;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, rgba(15,21,116,0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* ─── FLOATING SYMBOLS — behind everything, visible on light bg ─── */
-.sym-layer {
-  position: fixed;
-  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
   pointer-events: none;
   z-index: 0;
-  overflow: hidden;
-}
-.sym {
-  position: absolute;
-  font-family: var(--mono);
-  font-weight: 700;
-  opacity: 0;
-  animation: floatUp linear infinite;
-  user-select: none;
-}
-@keyframes floatUp {
-  0%   { opacity: 0;   transform: translateY(0)      rotate(0deg)  scale(0.85); }
-  10%  { opacity: 1; }
-  88%  { opacity: 0.6; }
-  100% { opacity: 0;   transform: translateY(-90vh)  rotate(22deg) scale(1.05); }
 }
 
-/* ─── PAGE ─── */
-.page { max-width: 980px; margin: 0 auto; padding: 0 24px 120px; position: relative; z-index: 1; }
+/* ─── LAYOUT ─── */
+.page { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; position: relative; z-index: 1; }
 
-/* ─── NAV ─── */
-.nav {
+/* ─── HEADER ─── */
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 0 22px;
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(250,250,250,0.88);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(15,21,116,0.07);
-  margin: 0 -24px;
-  padding-left: 24px; padding-right: 24px;
+  padding: 28px 0 0;
+  margin-bottom: 32px;
 }
-.logo { height: 26px; display: block; }
-.nav-right { display: flex; align-items: center; gap: 8px; }
-.nav-pill {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.07em;
-  text-transform: uppercase; border-radius: 100px; padding: 5px 14px;
-  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
-  color: var(--ink3); box-shadow: var(--sh-sm);
-}
-.nav-pill-hot {
-  background: linear-gradient(135deg, var(--coral), var(--amber));
-  color: #fff; border-color: transparent;
-  box-shadow: 0 2px 14px rgba(232,66,10,0.3);
-}
-
-/* ─── GRADE BADGE ─── */
-.grade-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--navy);
-  border: none;
-  border-radius: 14px;
-  padding: 7px 16px 7px 8px;
-  box-shadow: var(--sh-btn);
-  transition: box-shadow 0.2s;
-}
-.grade-badge:hover { box-shadow: 0 6px 20px rgba(15,21,116,0.3); }
-.grade-badge-num {
-  font-family: var(--font);
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1;
-  background: var(--rainbow-cta);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  padding: 2px 4px;
-}
-.grade-badge-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.grade-badge-label {
+.logo { height: 30px; width: auto; display: block; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.grade-pill {
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  line-height: 1;
-}
-.grade-badge-sub {
-  font-size: 10px;
   font-weight: 500;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.03em;
-  line-height: 1;
-}
-
-/* ─── HERO ─── */
-.hero {
-  padding: 28px 0 20px;
-  text-align: center;
-  position: relative;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  background: rgba(112,88,255,0.08);
-  border: 1.5px solid rgba(112,88,255,0.22);
-  border-radius: var(--r-pill); padding: 4px 14px; margin-bottom: 14px;
-  color: var(--purple);
-  font-family: var(--font);
-}
-.hero-tag-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--rainbow-cta);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(1.6);} }
-
-.hero-h1 {
-  font-family: var(--font);
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 10px;
-}
-.h1-line1 { color: var(--navy); display: inline; font-weight: 800; }
-.h1-line2 {
-  display: inline;
-  background: var(--coral-pink);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-style: italic;
-  font-weight: 700;
-  padding-bottom: 0.08em;
-}
-
-.hero-sub {
-  font-size: 13px; color: var(--ink3);
-  max-width: 460px; margin: 0 auto 16px;
-  line-height: 1.6; font-weight: 400;
-}
-
-/* stat pills row */
-.hero-pills {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.h-stat {
-  display: flex; align-items: center; gap: 6px;
-  background: #fff;
-  border: 1.5px solid rgba(15,21,116,0.09);
-  border-radius: var(--r-pill);
+  color: var(--text3);
+  background: var(--navy3);
+  border: 0.5px solid var(--border);
+  border-radius: 100px;
   padding: 5px 14px;
-  box-shadow: var(--sh-sm);
 }
-.h-stat-num {
-  font-family: var(--display);
-  font-size: 16px; font-weight: 800; line-height: 1;
-}
-.h-stat-lbl {
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--ink4);
+.standard-pill {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--teal);
+  background: rgba(0,200,150,0.08);
+  border: 0.5px solid rgba(0,200,150,0.2);
+  border-radius: 100px;
+  padding: 5px 12px;
 }
 
-/* ─── DOMAIN FILTER STRIP ─── */
-.filter-strip {
+/* ─── HERO STRIP ─── */
+.hero {
+  background: var(--navy3);
+  border: 0.5px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 36px;
+  margin-bottom: 12px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(232,66,10,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 30%;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(0,200,150,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-text { position: relative; z-index: 1; }
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text1);
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.hero-title strong { font-weight: 600; }
+.hero-sub { font-size: 13px; color: var(--text3); font-weight: 400; }
+.hero-stats { display: flex; gap: 24px; position: relative; z-index: 1; flex-shrink: 0; }
+.stat { text-align: right; }
+.stat-num { font-size: 26px; font-weight: 600; color: var(--text1); line-height: 1; margin-bottom: 3px; letter-spacing: -0.02em; }
+.stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ─── DOMAIN FILTER TABS ─── */
+.domain-nav {
+  display: flex;
   gap: 6px;
-  padding: 10px 0 12px;
+  padding: 16px 0 8px;
   overflow-x: auto;
   scrollbar-width: none;
 }
-.filter-strip::-webkit-scrollbar { display: none; }
-.fs-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 16px; border-radius: var(--r-pill);
-  border: 1.5px solid rgba(15,21,116,0.12);
-  background: #fff;
-  color: var(--ink3);
-  font-family: var(--font); font-size: 12px; font-weight: 600;
-  cursor: pointer; white-space: nowrap;
-  box-shadow: var(--sh-sm);
+.domain-nav::-webkit-scrollbar { display: none; }
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text3);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
   transition: all 0.18s ease;
   letter-spacing: 0.01em;
 }
-.fs-btn:hover { transform: translateY(-1px); box-shadow: var(--sh); color: var(--navy); border-color: rgba(15,21,116,0.22); }
-.fs-btn.on { color: #fff; border-color: transparent; box-shadow: var(--sh-btn); transform: translateY(-1px); }
-.fs-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: transform 0.18s; }
-.fs-btn:hover .fs-dot, .fs-btn.on .fs-dot { transform: scale(1.3); }
-.fs-count { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 5px; background: rgba(0,0,0,0.08); }
+.nav-tab:hover { background: var(--navy3); color: var(--text2); border-color: var(--border2); }
+.nav-tab.active { background: var(--navy3); color: var(--text1); border-color: var(--border2); }
+.nav-tab.active .nav-dot { opacity: 1; transform: scale(1); }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; opacity: 0.5; transform: scale(0.8); transition: all 0.18s; }
+.nav-count { font-size: 10px; color: var(--text3); background: var(--navy4); border-radius: 4px; padding: 1px 5px; margin-left: 2px; }
+.nav-tab.active .nav-count { color: var(--text2); }
 
-/* ─── ROADMAP ─── */
-.roadmap {
-  position: relative;
-  padding-left: 72px;
-}
+/* ─── DOMAIN SECTIONS ─── */
+.domains { display: flex; flex-direction: column; gap: 8px; }
 
-/* vertical gradient spine */
-.rm-spine {
-  position: absolute;
-  left: 26px;
-  top: 30px;
-  bottom: 30px;
-  width: 3px;
-  border-radius: 2px;
-  background: linear-gradient(
-    180deg,
-    #FFA41C 0%,
-    #FF4F84 25%,
-    #7058FF 50%,
-    #2C81ED 75%,
-    #B0EB33 100%
-  );
-  opacity: 0.6;
-}
-
-/* connecting lines from node to spine */
-.rm-item { position: relative; margin-bottom: 10px; }
-.rm-item::before {
-  content: '';
-  position: absolute;
-  left: -44px;
-  top: 32px;
-  width: 38px;
-  height: 1.5px;
-  background: rgba(255,255,255,0.15);
-  z-index: 1;
-}
-
-/* NODE */
-.rm-node {
-  position: absolute;
-  left: -60px;
-  top: 15px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--display);
-  font-size: 13px; font-weight: 800;
-  border: 2.5px solid;
-  /* Solid bg so spine and connector lines are fully hidden behind node */
-  background-clip: padding-box;
-  z-index: 10;
-  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s;
-  cursor: pointer;
-}
-.rm-item:hover .rm-node { transform: scale(1.18) rotate(-5deg); }
-
-/* CARD */
-.rm-card {
-  background: #fff;
-  border: 1px solid rgba(15,21,116,0.08);
-  border-radius: var(--r-lg);
-  box-shadow: var(--sh);
+.domain-block {
+  background: var(--navy2);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
   overflow: hidden;
-  transition: box-shadow 0.22s, border-color 0.22s, transform 0.22s;
+  transition: border-color 0.2s;
 }
-.rm-card:hover { box-shadow: var(--sh-lg); border-color: rgba(15,21,116,0.14); transform: translateY(-1px); }
-.rm-card.open  { box-shadow: var(--sh-lg); border-color: rgba(15,21,116,0.14); }
+.domain-block:hover { border-color: var(--border2); }
+.domain-block.is-active { border-color: var(--border2); }
 
-/* card top stripe */
-.rm-card-stripe {
-  height: 3px;
-  width: 100%;
-}
-
-/* card header */
-.rm-card-hdr {
-  display: flex; align-items: center; gap: 14px;
-  padding: 18px 22px;
-  cursor: pointer; user-select: none;
-  transition: background 0.15s;
-}
-.rm-card-hdr:hover { background: rgba(15,21,116,0.025); }
-
-.rm-card-icon {
-  width: 42px; height: 42px;
-  border-radius: 13px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 16px; font-weight: 900;
-  flex-shrink: 0;
-}
-.rm-card-info { flex: 1; min-width: 0; }
-.rm-card-name {
-  font-family: var(--display);
-  font-size: 16px; font-weight: 700; color: var(--navy);
-  margin-bottom: 2px; letter-spacing: -0.01em;
-}
-.rm-card-desc { font-size: 11.5px; color: var(--ink4); }
-
-.rm-card-right { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
-.rm-code {
-  font-family: var(--mono); font-size: 10px; font-weight: 700;
-  padding: 3px 10px; border-radius: 7px; border: 1.5px solid;
-  letter-spacing: 0.05em;
-}
-.rm-ct {
-  font-size: 11px; color: var(--ink4);
-  background: rgba(0,0,0,0.05);
-  border: 1.5px solid var(--border);
-  border-radius: 7px; padding: 3px 10px; font-weight: 600;
-}
-.chev {
-  width: 28px; height: 28px; border-radius: 9px;
-  background: rgba(15,21,116,0.05);
-  border: 1.5px solid rgba(15,21,116,0.10);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-}
-.rm-card.open .chev { background: var(--navy); border-color: var(--navy); }
-.chev svg { transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); color: var(--ink3); }
-.rm-card.open .chev svg { transform: rotate(180deg); color: #fff; }
-
-/* ─── ACCORDION OUTCOME ROWS ─── */
-.acc-outcomes-wrap {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.48s cubic-bezier(0.4,0,0.2,1);
-}
-.acc-outcomes-inner {
-  border-top: 1px solid rgba(15,21,116,0.07);
-  padding: 8px 0 12px;
-}
-.acc-row {
+.domain-header {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 16px;
+  padding: 20px 24px;
   cursor: pointer;
+  user-select: none;
   transition: background 0.15s;
-  position: relative;
 }
-.acc-row:hover { background: rgba(15,21,116,0.025); }
-.acc-row.is-open { background: rgba(15,21,116,0.025); }
-.acc-row-left {
+.domain-header:hover { background: rgba(255,255,255,0.02); }
+
+.domain-accent {
+  width: 4px;
+  border-radius: 2px;
+  height: 36px;
+  flex-shrink: 0;
+  transition: height 0.2s;
+}
+.domain-block.is-open .domain-accent { height: 44px; }
+
+.domain-icon-wrap {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+.domain-meta { flex: 1; min-width: 0; }
+.domain-name { font-size: 15px; font-weight: 600; color: var(--text1); margin-bottom: 2px; }
+.domain-desc { font-size: 12px; color: var(--text3); }
+.domain-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.domain-code {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.domain-badge {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--navy4);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 3px 10px;
+}
+.chevron {
+  width: 16px; height: 16px;
+  color: var(--text3);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), color 0.2s;
+  flex-shrink: 0;
+}
+.domain-block.is-open .chevron { transform: rotate(180deg); color: var(--text2); }
+
+/* ─── OUTCOMES LIST ─── */
+.outcomes-wrap {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.outcomes-inner { padding: 0 24px 20px; }
+.outcomes-divider {
+  height: 0.5px;
+  background: var(--border);
+  margin-bottom: 16px;
+}
+
+/* ─── OUTCOME ROW ─── */
+.outcome-row {
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  transition: border-color 0.18s;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.18s;
+}
+.outcome-row.revealed { opacity: 1; transform: translateY(0); }
+.outcome-row:hover { border-color: var(--border2); }
+.outcome-row.is-open { border-color: var(--border2); }
+
+.outcome-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 11px 22px;
-  flex: 1;
-  min-width: 0;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
 }
-.acc-row-num {
+.outcome-index {
   font-family: var(--mono);
-  font-size: 10px; font-weight: 700;
-  width: 24px; height: 24px;
+  font-size: 10px;
+  color: var(--text3);
+  width: 22px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.outcome-bullet { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.outcome-title { flex: 1; font-size: 13px; font-weight: 500; color: var(--text2); line-height: 1.4; }
+.outcome-row.is-open .outcome-title { color: var(--text1); }
+.outcome-row:hover .outcome-title { color: var(--text1); }
+.outcome-expand-icon {
+  width: 20px; height: 20px;
   border-radius: 6px;
+  background: var(--navy4);
+  border: 0.5px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  letter-spacing: 0;
-}
-.acc-row-title {
-  font-size: 13px; font-weight: 600;
-  color: var(--ink2); line-height: 1.4;
-  flex: 1;
-  transition: color 0.15s;
-}
-.acc-row:hover .acc-row-title,
-.acc-row.is-open .acc-row-title { color: var(--navy); }
-.acc-row-toggle {
-  width: 22px; height: 22px;
-  border-radius: 6px;
-  border: 1.5px solid rgba(15,21,116,0.12);
-  background: rgba(15,21,116,0.04);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  margin-right: 18px;
   transition: all 0.2s;
+}
+.outcome-row.is-open .outcome-expand-icon { background: var(--navy3); border-color: var(--border2); }
+.expand-cross {
+  width: 10px; height: 10px;
   position: relative;
+  display: flex; align-items: center; justify-content: center;
 }
-.acc-row.is-open .acc-row-toggle {
-  background: var(--navy);
-  border-color: var(--navy);
-}
-.acc-row-toggle::before,
-.acc-row-toggle::after {
+.expand-cross::before, .expand-cross::after {
   content: '';
   position: absolute;
+  background: var(--text3);
   border-radius: 1px;
   transition: all 0.22s;
 }
-.acc-row-toggle::before { width: 9px; height: 1.5px; background: var(--ink3); }
-.acc-row-toggle::after  { width: 1.5px; height: 9px; background: var(--ink3); }
-.acc-row.is-open .acc-row-toggle::before { background: #fff; }
-.acc-row.is-open .acc-row-toggle::after  { background: #fff; transform: rotate(90deg); opacity: 0; }
+.expand-cross::before { width: 10px; height: 1.5px; }
+.expand-cross::after  { width: 1.5px; height: 10px; }
+.outcome-row.is-open .expand-cross::before { background: var(--text2); }
+.outcome-row.is-open .expand-cross::after  { background: var(--text2); transform: rotate(90deg); opacity: 0; }
 
-/* row separator */
-.acc-row + .acc-row { border-top: 1px solid rgba(15,21,116,0.05); }
-
-/* detail panel per row */
-.acc-det {
-  max-height: 0;
+/* ─── SUB-SKILLS PANEL ─── */
+.sub-panel {
   overflow: hidden;
-  transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
-}
-.acc-det-in {
-  padding: 14px 22px 18px 58px;
-  border-top: 1px solid rgba(15,21,116,0.06);
-  background: rgba(15,21,116,0.02);
-}
-.acc-det-desc {
-  font-size: 12.5px; color: var(--ink2);
-  line-height: 1.65; margin-bottom: 12px;
-  max-width: 660px;
-}
-.acc-det-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media(max-width:600px){ .acc-det-cols { grid-template-columns: 1fr; } }
-.acc-det-col-label {
-  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--ink4); margin-bottom: 7px;
-}
-
-/* shimmer animation for first open */
-@keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:none;} }
-.acc-row.revealed { animation: rowIn 0.22s ease both; }
-
-/* ─── DETAIL PANEL ─── */
-.rm-detail {
   max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1);
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.rm-det-in {
-  padding: 18px 22px 22px;
-  border-top: 1px solid rgba(15,21,116,0.07);
-  background: rgba(15,21,116,0.025);
+.sub-inner {
+  padding: 0 16px 14px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
-/* breadcrumb */
-.rm-breadcrumb {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--ink4); margin-bottom: 10px;
+.sub-desc {
+  font-size: 12.5px;
+  color: var(--text2);
+  line-height: 1.6;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 4px;
 }
-.rm-breadcrumb-sep { opacity: 0.4; }
-
-.rm-det-title {
-  font-family: var(--display);
-  font-size: 17px; font-weight: 700; color: var(--navy);
-  margin-bottom: 8px; letter-spacing: -0.01em;
+.sub-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 8px;
+  border: 0.5px solid;
+  letter-spacing: 0.01em;
+  transition: all 0.15s;
+  cursor: default;
 }
-.rm-det-desc {
-  font-size: 13px; color: var(--ink2);
-  line-height: 1.7; margin-bottom: 16px;
-  max-width: 680px;
-}
-
-/* two-col layout for topics + skills */
-.rm-det-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media(max-width:640px){ .rm-det-cols { grid-template-columns: 1fr; } }
-
-.rm-det-col-label {
-  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--ink4); margin-bottom: 8px;
-}
-.topic-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.topic-chip {
-  font-size: 11.5px; font-weight: 600;
-  padding: 4px 12px; border-radius: var(--r-pill); border: 1.5px solid;
-  transition: transform 0.15s;
-}
-.topic-chip:hover { transform: translateY(-1px); }
-
-.skills-list { display: flex; flex-direction: column; gap: 5px; }
-.skill-row {
-  display: flex; align-items: flex-start; gap: 8px;
-  background: #fff;
-  border: 1px solid rgba(15,21,116,0.07);
-  border-radius: 9px; padding: 7px 11px;
-  font-size: 12px; color: var(--ink2); line-height: 1.45;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
-  box-shadow: 0 1px 3px rgba(15,21,116,0.04);
-}
-.skill-row:hover { border-color: rgba(15,21,116,0.15); box-shadow: var(--sh-sm); transform: translateX(2px); }
-.skill-bullet {
-  width: 5px; height: 5px; border-radius: 50%;
-  flex-shrink: 0; margin-top: 5px;
-}
+.sub-tag:hover { filter: brightness(1.2); }
+.sub-tag-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; color: var(--text3); }
 
 /* ─── FOOTER ─── */
 .footer {
-  margin-top: 60px;
+  margin-top: 48px;
   padding-top: 20px;
-  border-top: 1px solid rgba(15,21,116,0.08);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.foot-l { font-size: 12px; color: var(--ink4); font-weight: 500; }
-.foot-codes { display: flex; gap: 5px; flex-wrap: wrap; }
-.foot-code {
-  font-family: var(--mono); font-size: 10px; font-weight: 600;
-  padding: 3px 9px; border-radius: 6px; letter-spacing: 0.05em;
-}
+.footer-left { font-size: 11px; color: var(--text3); }
+.footer-right { font-size: 11px; color: var(--text3); font-family: var(--mono); }
 
 /* ─── ANIMATIONS ─── */
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
-.hero    { animation: fadeUp 0.55s ease both 0.06s; }
-.filter-strip { animation: fadeUp 0.45s ease both 0.16s; }
-.rm-item { animation: fadeUp 0.4s ease both; }
-.rm-item:nth-child(2) { animation-delay:0.10s; }
-.rm-item:nth-child(3) { animation-delay:0.15s; }
-.rm-item:nth-child(4) { animation-delay:0.20s; }
-.rm-item:nth-child(5) { animation-delay:0.25s; }
-.rm-item:nth-child(6) { animation-delay:0.30s; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.domain-block { animation: fadeUp 0.4s ease both; }
+.domain-block:nth-child(1) { animation-delay: 0.05s; }
+.domain-block:nth-child(2) { animation-delay: 0.10s; }
+.domain-block:nth-child(3) { animation-delay: 0.15s; }
+.domain-block:nth-child(4) { animation-delay: 0.20s; }
+.domain-block:nth-child(5) { animation-delay: 0.25s; }
 
+/* ─── GRADE SWITCHER ─── */
+.grade-switcher { position: relative; }
+.grade-switcher-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--navy3);
+  border: 0.5px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 12px 6px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.grade-switcher-btn:hover { background: var(--navy4); border-color: var(--border2); }
+.grade-switcher-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text2);
+}
+.grade-chevron { color: var(--text3); transition: transform 0.2s; }
+.grade-switcher.open .grade-chevron { transform: rotate(180deg); }
+
+.grade-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--navy2);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.5);
+  overflow: hidden; min-width: 190px;
+  opacity: 0; pointer-events: none;
+  transform: translateY(-6px) scale(0.97);
+  transform-origin: top right;
+  transition: opacity 0.18s, transform 0.18s;
+  z-index: 300;
+}
+.grade-switcher.open .grade-dropdown { opacity: 1; pointer-events: all; transform: none; }
+.grade-dropdown-hdr {
+  padding: 10px 14px 7px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3);
+  border-bottom: 0.5px solid var(--border);
+}
+.grade-opt {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  cursor: pointer; transition: background 0.13s;
+  border-bottom: 0.5px solid var(--border);
+}
+.grade-opt:last-child { border-bottom: none; }
+.grade-opt:hover { background: var(--navy3); color: var(--text1); }
+.grade-opt.active { color: var(--teal); background: rgba(0,200,150,0.08); }
+.grade-opt.active::after {
+  content: '✓'; font-size: 11px; font-weight: 700; color: var(--teal);
+}
+.grade-opt.soon { color: var(--text3); cursor: default; }
+.grade-opt.soon:hover { background: transparent; color: var(--text3); }
+.soon-tag {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--amber);
+  background: rgba(245,166,35,0.08);
+  border: 0.5px solid rgba(245,166,35,0.25);
+  border-radius: 4px; padding: 1px 6px;
+}
+
+/* ─── DOMAIN WORKSHEET BUTTON ─── */
+.domain-ws-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 0.5px solid;
+  border-radius: 100px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  background: transparent;
+}
+.domain-ws-btn:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+
+/* ─── HOVER TOOLTIP ─── */
+.ws-tooltip {
+  position: fixed; z-index: 500;
+  pointer-events: none; opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  transition: opacity 0.18s, transform 0.18s;
+  width: 290px;
+}
+.ws-tooltip.visible { opacity: 1; transform: none; pointer-events: all; }
+.ws-card {
+  background: var(--navy2);
+  border: 0.5px solid var(--border2);
+  border-radius: 14px;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+.ws-card-hdr {
+  padding: 12px 14px 8px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex; align-items: center; gap: 9px;
+}
+.ws-card-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.ws-card-title { font-size: 11px; font-weight: 700; line-height: 1.3; }
+.ws-card-sub { font-size: 9px; color: var(--text3); margin-top: 1px; font-family: var(--mono); }
+.ws-preview-area { padding: 10px 14px; background: var(--navy3); }
+.ws-preview-label {
+  font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ws-rotate-dot {
+  display: inline-block; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--teal); animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.ws-q {
+  background: var(--navy);
+  border: 0.5px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 10px; margin-bottom: 4px;
+  font-size: 11.5px; color: var(--text2); line-height: 1.55;
+  display: flex; align-items: flex-start; gap: 7px;
+  animation: fadeQ 0.4s ease;
+}
+@keyframes fadeQ { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+.ws-q-num {
+  font-family: var(--mono); font-size: 9px; font-weight: 700;
+  color: var(--text3); flex-shrink: 0; margin-top: 2px;
+}
+.ws-q-skill {
+  font-size: 9.5px; font-weight: 700; line-height: 1.3;
+  margin-bottom: 2px; letter-spacing: 0;
+}
+.ws-cta {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 14px;
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  border-top: 0.5px solid;
+  transition: filter 0.15s;
+}
+.ws-cta:hover { filter: brightness(1.2); }
+
+/* ─── WORKSHEET MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--navy2);
+  border: 0.5px solid var(--border2);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  width: 100%; max-width: 620px; max-height: 88vh;
+  overflow: hidden; display: flex; flex-direction: column;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.28s cubic-bezier(0.34,1.2,0.64,1);
+}
+.modal-overlay.open .modal { transform: none; }
+.modal-top {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 0.5px solid var(--border);
+  flex-shrink: 0;
+}
+.modal-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.modal-info { flex: 1; min-width: 0; }
+.modal-domain {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.modal-title { font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--text1); }
+.modal-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: var(--navy3);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.15s; font-size: 14px; color: var(--text3);
+}
+.modal-close:hover { background: var(--navy4); color: var(--text1); }
+.modal-body {
+  overflow-y: auto; padding: 20px 24px 24px; flex: 1;
+}
+.modal-body::-webkit-scrollbar { width: 5px; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.ws-intro {
+  font-size: 12.5px; color: var(--text2); line-height: 1.7;
+  margin-bottom: 18px; padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--border);
+}
+.ws-section-lbl {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ws-section-lbl::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+
+.modal-q {
+  background: var(--navy3);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.modal-q-skill {
+  font-size: 10px; font-weight: 700; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.modal-q-skill::before {
+  content: ''; width: 3px; height: 12px; border-radius: 2px;
+  background: currentColor;
+}
+.modal-q-label {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 4px;
+}
+.modal-q-text {
+  font-size: 13px; color: var(--text1); font-weight: 500;
+  line-height: 1.55; margin-bottom: 10px;
+}
+.modal-q-input {
+  width: 100%; min-height: 64px;
+  background: var(--navy);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--font); font-size: 13px;
+  color: var(--text1); line-height: 1.5;
+  resize: vertical; outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.modal-q-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0,200,150,0.1);
+}
+.modal-q-input::placeholder { color: var(--text3); }
+
+.modal-footer {
+  padding: 12px 20px;
+  border-top: 0.5px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; background: var(--navy);
+}
+.modal-footer-note { font-size: 11px; color: var(--text3); }
+.modal-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; border-radius: 100px;
+  padding: 9px 20px;
+  font-family: var(--font); font-size: 12px; font-weight: 700;
+  color: white; cursor: pointer;
+  transition: all 0.18s;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  box-shadow: 0 4px 14px rgba(0,200,150,0.25);
+}
+.modal-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,200,150,0.35); }
+
+/* ─── EMPTY GRADE STATE ─── */
+.empty-grade {
+  text-align: center;
+  padding: 80px 24px;
+}
+.empty-grade-icon {
+  font-size: 48px; margin-bottom: 16px;
+  filter: grayscale(0.3);
+}
+.empty-grade-title {
+  font-size: 22px; font-weight: 700;
+  color: var(--text1); margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.empty-grade-sub {
+  font-size: 13px; color: var(--text2);
+  line-height: 1.7; max-width: 380px; margin: 0 auto;
+}
+
+/* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 </style>
 </head>
 <body>
-
-<!-- BG LAYERS -->
-<div class="bg-canvas"></div>
-<div class="dot-grid"></div>
-<div class="sym-layer" id="symLayer"></div>
-
 <div class="page">
 
-  <!-- NAV -->
-  <nav class="nav">
-    <img class="logo" src="data:image/png;base64,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" alt="Strive Math"/>
-    <div class="nav-right">
-      <div class="grade-badge">
-        <span class="grade-badge-num">7</span>
-        <div class="grade-badge-info">
-          <span class="grade-badge-label">Grade</span>
-          <span class="grade-badge-sub">Mathematics</span>
+  <!-- HEADER -->
+  <header class="header">
+    <img class="logo" src="data:image/png;base64,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" alt="Strive Math"/>
+    <div class="header-right">
+      <div class="grade-switcher" id="gradeSwitcher">
+        <div class="grade-switcher-btn" onclick="toggleGradeDropdown(event)">
+          <span class="grade-switcher-label" id="currentGradeLabel">Grade 8</span>
+          <svg class="grade-chevron" width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><polyline points="2.5,4 5.5,7 8.5,4"/></svg>
+        </div>
+        <div class="grade-dropdown" id="gradeDropdown">
+          <div class="grade-dropdown-hdr">Switch Grade</div>
+          <div class="grade-opt soon">Grade 4 <span class="soon-tag">Soon</span></div>
+          <div class="grade-opt soon">Grade 5 <span class="soon-tag">Soon</span></div>
+          <div class="grade-opt soon">Grade 6 <span class="soon-tag">Soon</span></div>
+          <div class="grade-opt soon">Grade 7 <span class="soon-tag">Soon</span></div>
+          <div class="grade-opt active" data-grade="8" onclick="switchGrade(8)">Grade 8</div>
         </div>
       </div>
+      <span class="standard-pill">CCSS · Mathematics</span>
     </div>
-  </nav>
+  </header>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-tag"><span class="hero-tag-dot"></span>Common Core Mathematics · Grade 7</div>
-    <h1 class="hero-h1">
-      <span class="h1-line1">Grade 7 </span><span class="h1-line2">Learning Outcomes</span>
-    </h1>
-    <p class="hero-sub">Every standard your child masters this year — click any domain to expand, then select an outcome to see topics and skills.</p>
-    <div class="hero-pills">
-      <div class="h-stat"><span class="h-stat-num" style="color:#FF6635">5</span><span class="h-stat-lbl">Domains</span></div>
-      <div class="h-stat"><span class="h-stat-num" style="color:#7058FF">36</span><span class="h-stat-lbl">Outcomes</span></div>
-      <div class="h-stat"><span class="h-stat-num" style="color:#2C81ED">130+</span><span class="h-stat-lbl">Sub-skills</span></div>
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Curriculum Overview</div>
+      <div class="hero-title"><strong>Grade 8</strong> Learning Outcomes</div>
+      <div class="hero-sub">Common Core State Standards · Mathematics</div>
     </div>
-  </section>
-
-  <!-- FILTER STRIP -->
-  <div class="filter-strip" id="filterStrip"></div>
-
-  <!-- ROADMAP -->
-  <div class="roadmap" id="roadmap">
-    <div class="rm-spine"></div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Domains</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">39</div>
+        <div class="stat-label">Outcomes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Sub-skills</div>
+      </div>
+    </div>
   </div>
+
+  <!-- DOMAIN NAV -->
+  <nav class="domain-nav" id="domainNav"></nav>
+
+  <!-- DOMAINS -->
+  <div class="domains" id="domainsContainer"></div>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <span class="foot-l">Strive Math · Grade 7 Common Core State Standards</span>
-    <div class="foot-codes" id="footCodes"></div>
+    <div class="footer-left">Strive Math · Grade 8 Common Core Curriculum</div>
+    <div class="footer-right">8.NS · 8.EE · 8.F · 8.G · 8.SP</div>
   </footer>
 
-</div><!-- /page -->
+</div>
+
+<!-- HOVER TOOLTIP -->
+<div class="ws-tooltip" id="wsTooltip">
+  <div class="ws-card">
+    <div class="ws-card-hdr">
+      <div class="ws-card-icon" id="wsTipIcon"></div>
+      <div>
+        <div class="ws-card-title" id="wsTipTitle"></div>
+        <div class="ws-card-sub" id="wsTipSub"></div>
+      </div>
+    </div>
+    <div class="ws-preview-area">
+      <div class="ws-preview-label">
+        <span id="wsTipLabel">Sample question</span>
+        <span class="ws-rotate-dot" id="wsTipDot"></span>
+      </div>
+      <div id="wsTipQs"></div>
+    </div>
+    <div class="ws-cta" id="wsTipCta" style="display:none;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="3.5" y1="4" x2="8.5" y2="4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="3.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="3.5" y1="9" x2="6.5" y2="9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Open worksheet
+    </div>
+  </div>
+</div>
+
+<!-- WORKSHEET MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOuter(event)">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-icon" id="mIcon"></div>
+      <div class="modal-info">
+        <div class="modal-domain" id="mDomain"></div>
+        <div class="modal-title" id="mTitle"></div>
+      </div>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+    <div class="modal-footer">
+      <span class="modal-footer-note" id="mFooterNote">Strive Math · Grade 8 Worksheet</span>
+      <button class="modal-btn" onclick="closeModal()">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Done
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
-/* ══════════════════════════════════
-   GRADE 7 CCSS DATA
-══════════════════════════════════ */
-const DS = [
+const DOMAINS = [
   {
-    id:'RP', code:'7.RP', icon:'∶',
-    name:'Ratios & Proportional Relationships',
-    desc:'Unit rates, proportionality, percent problems',
-    c:'#FF6635', cl:'rgba(255,102,53,0.12)', cb:'rgba(255,102,53,0.28)',
-    cStripe:'linear-gradient(90deg,#FFA41C,#FF6635)',
-    outcomes:[
-      { t:'Compute unit rates with fractions',
-        d:'Compute unit rates associated with ratios of fractions, including complex fractions, in real-world contexts such as speed, price, and density.',
-        tags:['Unit rate','Complex fractions','Real-world ratios','Speed & density'],
-        skills:['Find unit rate from a ratio of fractions','Compute miles per hour with fractional values','Find price per unit with fractional quantities','Solve density problems with fractions','Compare unit rates to determine best value'] },
-      { t:'Decide if two quantities are proportional',
-        d:'Decide whether two quantities are in a proportional relationship by testing for equivalent ratios in a table and by graphing on a coordinate plane.',
-        tags:['Proportional relationship','Equivalent ratios','Graph test','Table test'],
-        skills:['Test for equivalent ratios in a table','Check proportionality by graphing','Identify proportional vs non-proportional tables','Identify proportional vs non-proportional graphs','Explain why a relationship is or is not proportional'] },
-      { t:'Identify the constant of proportionality',
-        d:'Identify the constant of proportionality (unit rate) in tables, graphs, equations, diagrams, and verbal descriptions of proportional relationships.',
-        tags:['Constant of proportionality','Unit rate','Multiple representations','y = kx'],
-        skills:['Find k from a table','Find k from a graph (slope)','Find k from an equation y=kx','Find k from a diagram','Find k from a verbal description','Explain the meaning of points (x,y) including (1,r)'] },
-      { t:'Represent proportional relationships by equations',
-        d:'Represent proportional relationships by equations of the form y=kx; explain what a point (x,y) means in context.',
-        tags:['Equation y=kx','Represent relationships','Interpret points','Write equations'],
-        skills:['Write y=kx from a table','Write y=kx from a graph','Write y=kx from a word problem','Interpret (0,0) in context','Interpret (1,k) in context','Predict values using y=kx'] },
-      { t:'Solve multi-step ratio and percent problems',
-        d:'Use proportional relationships to solve multistep ratio and percent problems involving simple interest, tax, markups, discounts, gratuities, commissions, percent increase/decrease, and percent error.',
-        tags:['Percent','Simple interest','Tax','Discount','Percent change','Markup'],
-        skills:['Calculate simple interest (I=Prt)','Calculate sales tax','Calculate tip and gratuity','Calculate commission','Find percent increase','Find percent decrease','Calculate percent error','Find original price after discount','Find selling price after markup','Solve multi-step percent problems'] },
+    id: 'NS', code: '8.NS', name: 'The Number System',
+    desc: 'Rational and irrational numbers, decimal expansions',
+    color: '#E8420A', bg: 'rgba(232,66,10,0.1)', icon: 'ℝ',
+    outcomes: [
+      {
+        title: 'Know and approximate irrational numbers',
+        desc: 'Understand that some numbers cannot be expressed as fractions and learn to place them on a number line using rational approximations.',
+        tags: ['Rational vs irrational','Number classification','Approximation strategies'],
+        skills: ['Identify irrational numbers (e.g. √2, π)', 'Approximate to 1 decimal place', 'Approximate to 2 decimal places', 'Compare two irrational numbers', 'Order a mix of rational and irrational numbers']
+      },
+      {
+        title: 'Locate irrationals on a number line',
+        desc: 'Use rational approximations to place irrational numbers between consecutive integers or tenths on a number line.',
+        tags: ['Number line','Visual estimation','Rational approximation'],
+        skills: ['Place between consecutive integers', 'Place between consecutive tenths', 'Estimate from a number line', 'Use a calculator to verify placement']
+      },
+      {
+        title: 'Compare sizes using rational approximations',
+        desc: 'Use decimal approximations to compare and order irrational numbers in real-world and mathematical contexts.',
+        tags: ['Comparison','Ordering','Decimal approximation'],
+        skills: ['Use inequality symbols (<, >, =)', 'Order a set of irrational numbers', 'Compare irrational expressions', 'Apply to real-world measurements']
+      },
+      {
+        title: 'Decimal expansions and fraction conversion',
+        desc: 'Understand that every rational number has a terminating or repeating decimal expansion and convert between forms.',
+        tags: ['Repeating decimals','Terminating decimals','Fraction conversion'],
+        skills: ['Convert repeating decimal to fraction', 'Identify terminating vs repeating', 'Long division to find decimal expansion', 'Recognize patterns in expansions']
+      },
     ]
   },
   {
-    id:'NS', code:'7.NS', icon:'±',
-    name:'The Number System',
-    desc:'Operations with rational numbers, absolute value, number line',
-    c:'#7058FF', cl:'rgba(112,88,255,0.12)', cb:'rgba(112,88,255,0.28)',
-    cStripe:'linear-gradient(90deg,#7058FF,#FF4F84)',
-    outcomes:[
-      { t:'Add and subtract rational numbers',
-        d:'Apply and extend previous understanding of addition and subtraction to add and subtract rational numbers — integers, fractions, and decimals — using a number line model.',
-        tags:['Adding integers','Subtracting integers','Fractions','Decimals','Number line'],
-        skills:['Add two positive integers','Add two negative integers','Add integers with different signs','Subtract integers using p−q=p+(−q)','Add fractions (positive and negative)','Subtract fractions (positive and negative)','Add and subtract decimals (positive and negative)','Solve real-world problems (temperature, elevation, finance)'] },
-      { t:'Multiply and divide rational numbers',
-        d:'Apply rules for multiplying and dividing rational numbers; understand that the product of two negatives is positive; convert any rational number to a decimal.',
-        tags:['Multiply integers','Divide integers','Sign rules','Rational to decimal'],
-        skills:['Multiply two integers: same sign','Multiply two integers: different signs','Divide integers: same sign','Divide integers: different signs','Multiply fractions (positive and negative)','Divide fractions (positive and negative)','Multiply and divide decimals (positive and negative)','Convert any fraction to a repeating or terminating decimal'] },
-      { t:'Solve real-world problems with rational numbers',
-        d:'Solve real-world and mathematical problems involving the four operations with rational numbers, interpreting answers in the context given.',
-        tags:['Real-world','Four operations','Multi-step','Interpret results'],
-        skills:['Multi-step problems with integers','Multi-step problems with fractions','Multi-step problems with decimals','Mixed rational number problems','Interpret negative results in context','Write and evaluate expressions for real-world situations'] },
-      { t:'Properties of operations with rational numbers',
-        d:'Understand and apply properties — commutative, associative, distributive, identity, inverse — to add, subtract, multiply, and divide rational numbers efficiently.',
-        tags:['Commutative','Associative','Distributive','Identity','Inverse'],
-        skills:['Apply commutative property','Apply associative property','Apply distributive property with negatives','Use additive inverse to simplify','Use multiplicative inverse to simplify','Apply properties to justify steps in a solution'] },
+    id: 'EE', code: '8.EE', name: 'Expressions & Equations',
+    desc: 'Exponents, scientific notation, slope, linear equations, systems',
+    color: '#00C896', bg: 'rgba(0,200,150,0.09)', icon: '=',
+    outcomes: [
+      {
+        title: 'Properties of integer exponents',
+        desc: 'Apply the laws of exponents to simplify and generate equivalent numerical and algebraic expressions, including zero and negative exponents.',
+        tags: ['Product rule','Quotient rule','Power rule','Negative exponents'],
+        skills: ['Multiply powers with same base', 'Divide powers with same base', 'Power of a power', 'Zero exponent rule', 'Negative exponent rule', 'Combine multiple exponent rules']
+      },
+      {
+        title: 'Square roots and cube roots',
+        desc: 'Use radical notation to represent solutions to x²=p and x³=p; evaluate square and cube roots of perfect values.',
+        tags: ['Square roots','Cube roots','Radical notation','Perfect squares'],
+        skills: ['Evaluate √ of perfect squares (1–225)', 'Evaluate ∛ of perfect cubes (1–512)', 'Solve x²=p for positive p', 'Solve x³=p', 'Estimate non-perfect square roots']
+      },
+      {
+        title: 'Scientific notation — write and interpret',
+        desc: 'Express and interpret very large and very small numbers using scientific notation; understand how technology displays these numbers.',
+        tags: ['Scientific notation','Powers of 10','Standard form'],
+        skills: ['Convert large numbers to sci. notation', 'Convert small numbers to sci. notation', 'Convert from sci. notation to standard', 'Interpret calculator scientific notation', 'Choose appropriate units of size']
+      },
+      {
+        title: 'Operations with scientific notation',
+        desc: 'Add, subtract, multiply, and divide numbers in scientific notation; express results in proper scientific notation form.',
+        tags: ['Multiply','Divide','Add','Subtract','Scientific notation'],
+        skills: ['Multiply numbers in sci. notation', 'Divide numbers in sci. notation', 'Add with same power of 10', 'Add with different powers of 10', 'Real-world multi-step problems']
+      },
+      {
+        title: 'Proportional relationships and slope',
+        desc: 'Graph proportional relationships; interpret the unit rate as the slope of the graph and compare two proportional relationships represented differently.',
+        tags: ['Slope','Unit rate','Proportionality','Graphing'],
+        skills: ['Calculate unit rate from a table', 'Identify slope from a graph', 'Compare two proportional relationships', 'Write equation y=kx from context', 'Interpret slope in real-world context']
+      },
+      {
+        title: 'Slope via similar triangles',
+        desc: 'Use the properties of similar triangles to explain why slope is constant between any two distinct points on a non-vertical line in the coordinate plane.',
+        tags: ['Similar triangles','Constant slope','Coordinate plane','Proof'],
+        skills: ['Identify rise and run from a graph', 'Verify slope using two different pairs of points', 'Explain slope constancy with triangles', 'Slope between any two points formula']
+      },
+      {
+        title: 'Solve linear equations in one variable',
+        desc: 'Solve linear equations with rational number coefficients; recognize when equations have one solution, infinitely many solutions, or no solution.',
+        tags: ['One solution','No solution','Infinitely many','Distributive property'],
+        skills: ['Solve with integer coefficients', 'Solve with rational coefficients', 'Solve using distributive property', 'Combine like terms first', 'Identify number of solutions', 'Write equations from word problems']
+      },
+      {
+        title: 'Understand systems of linear equations',
+        desc: 'Understand that the solution to a system is the point of intersection of the two lines; recognize consistent, inconsistent, and dependent systems.',
+        tags: ['Intersection','Consistent','Inconsistent','Dependent'],
+        skills: ['Identify solution from a graph', 'Understand what "no solution" means graphically', 'Understand infinitely many solutions graphically', 'Interpret systems in context']
+      },
+      {
+        title: 'Solve systems graphically',
+        desc: 'Estimate the solution to a system of two linear equations by graphing both lines and finding their point of intersection.',
+        tags: ['Graph two lines','Estimate intersection','Slope-intercept form'],
+        skills: ['Graph both lines in slope-intercept form', 'Estimate intersection coordinates', 'Verify solution algebraically', 'Identify parallel lines (no solution)', 'Identify same line (infinite solutions)']
+      },
+      {
+        title: 'Solve systems algebraically',
+        desc: 'Solve systems of two linear equations using substitution and elimination methods; apply to real-world problems.',
+        tags: ['Substitution','Elimination','Two variables'],
+        skills: ['Substitution method — simple', 'Substitution method — complex', 'Elimination by addition/subtraction', 'Elimination by multiplication first', 'Choose the most efficient method']
+      },
+      {
+        title: 'Real-world problems with systems',
+        desc: 'Model and solve real-world situations that lead to a system of two linear equations in two variables.',
+        tags: ['Modelling','Word problems','Two unknowns'],
+        skills: ['Set up a system from a word problem', 'Solve mixture problems', 'Solve distance/rate/time problems', 'Solve cost and revenue problems', 'Interpret the solution in context']
+      },
     ]
   },
   {
-    id:'EE', code:'7.EE', icon:'x',
-    name:'Expressions & Equations',
-    desc:'Equivalent expressions, linear equations, inequalities',
-    c:'#FFA41C', cl:'rgba(255,164,28,0.12)', cb:'rgba(255,164,28,0.28)',
-    cStripe:'linear-gradient(90deg,#FFA41C,#FF6635)',
-    outcomes:[
-      { t:'Apply properties to rewrite expressions',
-        d:'Apply properties of operations as strategies to add, subtract, factor, and expand linear expressions with rational coefficients.',
-        tags:['Expand','Factor','Like terms','Rational coefficients'],
-        skills:['Combine like terms with rational coefficients','Expand using the distributive property','Factor out a common factor','Simplify multi-step expressions','Add and subtract linear expressions','Write equivalent expressions from context'] },
-      { t:'Understand equivalent expressions',
-        d:'Understand that rewriting an expression in different forms can shed light on a problem and how the quantities in it are related — e.g. a+0.05a = 1.05a.',
-        tags:['Equivalence','Interpret expressions','Meaningful forms','Substitution check'],
-        skills:['Recognise equivalent forms of an expression','Explain what a simplified form reveals','Write a+0.05a=1.05a and explain','Interpret the parts of an expression','Compare two forms of the same expression','Check equivalence by substitution'] },
-      { t:'Solve multi-step real-life problems using equations',
-        d:'Solve multi-step real-life and mathematical problems posed with positive and negative rational numbers; estimate answers and assess reasonableness.',
-        tags:['Multi-step equations','Positive and negative rationals','Real-world','Reasonableness'],
-        skills:['Solve two-step equations with integers','Solve two-step equations with rational numbers','Write an equation from a word problem','Estimate the answer before solving','Assess reasonableness of answer','Solve problems involving consecutive integers'] },
-      { t:'Use variables to represent and solve problems',
-        d:'Use variables to represent quantities; construct simple equations and inequalities to solve problems and interpret solutions in context.',
-        tags:['Define a variable','Construct equations','Inequalities','Interpret solutions'],
-        skills:['Define a variable to represent an unknown','Write an equation from a scenario','Write an inequality from a scenario','Solve the equation or inequality','Interpret the solution in context','Check the solution makes sense'] },
-      { t:'Solve equations of the form px+q=r and p(x+q)=r',
-        d:'Solve word problems leading to equations of the form px+q=r and p(x+q)=r, where p, q, and r are rational numbers.',
-        tags:['px+q=r','p(x+q)=r','Two-step equations','Word problems'],
-        skills:['Solve px+q=r (integer coefficients)','Solve px+q=r (rational coefficients)','Solve p(x+q)=r','Translate word problem to px+q=r','Translate word problem to p(x+q)=r','Verify solution by substitution'] },
-      { t:'Solve inequalities and graph solution sets',
-        d:'Solve word problems leading to inequalities of the form px+q>r or px+q<r; graph the solution set on a number line and interpret in context.',
-        tags:['Linear inequalities','Graph solution set','Number line','Interpret in context'],
-        skills:['Solve px+q > r','Solve px+q < r','Solve px+q ≥ r and ≤ r','Graph solution on a number line','Use open vs closed circle correctly','Write and solve an inequality from a word problem','Interpret what the solution set means'] },
+    id: 'F', code: '8.F', name: 'Functions',
+    desc: 'Defining functions, linear vs non-linear, constructing models',
+    color: '#F5A623', bg: 'rgba(245,166,35,0.09)', icon: 'f(x)',
+    outcomes: [
+      {
+        title: 'Define and identify functions',
+        desc: 'Understand that a function assigns exactly one output to each input; use function notation f(x) and determine whether a relation is a function.',
+        tags: ['Input/output','Vertical line test','Mapping diagrams','Function notation'],
+        skills: ['Identify functions from mapping diagrams', 'Identify functions from tables', 'Apply vertical line test to graphs', 'Use function notation f(x)', 'Evaluate f(x) for a given input', 'Determine domain from context']
+      },
+      {
+        title: 'Compare properties of two functions',
+        desc: 'Compare rate of change and initial values of two functions represented in different ways — algebraically, graphically, numerically, or verbally.',
+        tags: ['Rate of change','Initial value','Multiple representations'],
+        skills: ['Compare slopes from graph vs table', 'Compare slopes from equation vs graph', 'Identify greater rate of change', 'Compare y-intercepts across representations', 'Real-world comparison problems']
+      },
+      {
+        title: 'Linear functions and y = mx + b',
+        desc: 'Interpret the equation y=mx+b as defining a linear function; understand that the graph is a straight line where m is slope and b is y-intercept.',
+        tags: ['Slope-intercept form','y-intercept','Linear graph','Rate of change'],
+        skills: ['Identify slope and y-intercept from equation', 'Graph y=mx+b', 'Write equation from slope and a point', 'Write equation from two points', 'Identify parallel and perpendicular lines']
+      },
+      {
+        title: 'Identify non-linear functions',
+        desc: 'Recognize that not all functions are linear; identify non-linear functions from their equations, tables, or graphs.',
+        tags: ['Quadratic','Absolute value','Non-linear patterns','Graphs'],
+        skills: ['Identify non-linear from a table', 'Identify non-linear from a graph', 'Give examples of non-linear functions', 'Compare linear and non-linear graphs', 'Classify A=s² and V=s³']
+      },
+      {
+        title: 'Construct a function from a relationship',
+        desc: 'Build a linear function to model a relationship between two quantities; determine and interpret the rate of change and initial value from any representation.',
+        tags: ['Modelling','Real-world context','Rate of change','Initial value'],
+        skills: ['Write function from a word problem', 'Find rate of change from a table', 'Find initial value from a table', 'Interpret slope in real-world context', 'Interpret y-intercept in real-world context', 'Predict values using the function']
+      },
+      {
+        title: 'Describe and sketch functional graphs',
+        desc: 'Describe qualitatively the functional relationship between two quantities shown in a graph; sketch a graph from a verbal description.',
+        tags: ['Qualitative description','Increasing/decreasing','Sketch','Interval analysis'],
+        skills: ['Identify increasing and decreasing intervals', 'Identify constant intervals', 'Describe real-world graph stories', 'Sketch a graph from a description', 'Interpret maximum and minimum points', 'Match graphs to scenarios']
+      },
     ]
   },
   {
-    id:'G', code:'7.G', icon:'△',
-    name:'Geometry',
-    desc:'Scale drawing, plane figures, circles, angles, surface area, volume',
-    c:'#2C81ED', cl:'rgba(44,129,237,0.12)', cb:'rgba(44,129,237,0.28)',
-    cStripe:'linear-gradient(90deg,#2C81ED,#7058FF)',
-    outcomes:[
-      { t:'Solve problems with scale drawings',
-        d:'Solve problems involving scale drawings of geometric figures — compute actual lengths and areas from a scale, and reproduce a drawing at a different scale.',
-        tags:['Scale drawing','Scale factor','Actual measurements','Maps'],
-        skills:['Find actual length from scale drawing','Find drawing length from actual length','Find scale factor between two drawings','Find area from a scale drawing','Reproduce a figure at a different scale','Apply scale drawings to maps and blueprints'] },
-      { t:'Draw geometric shapes with given conditions',
-        d:'Draw triangles and other geometric shapes with given conditions; identify whether exactly one, more than one, or no triangle can be formed.',
-        tags:['Triangle conditions','Unique triangle','Ambiguous case','Construction'],
-        skills:['Draw triangle given 3 side lengths','Draw triangle given 2 sides and included angle','Draw triangle given 2 angles and included side','Identify unique triangle cases','Identify impossible triangle cases','Identify ambiguous (more than one) cases'] },
-      { t:'Describe cross-sections of 3D figures',
-        d:'Describe the two-dimensional shapes that result from slicing three-dimensional figures such as prisms, pyramids, cylinders, and cones.',
-        tags:['Cross-section','3D solids','Slicing','2D shapes'],
-        skills:['Identify cross-section of a rectangular prism (horizontal)','Identify cross-section of a rectangular prism (vertical)','Identify cross-section of a pyramid','Identify cross-section of a cylinder','Identify cross-section of a cone','Sketch the cross-section from a description'] },
-      { t:'Circumference and area of circles',
-        d:'Know the formulas for the area and circumference of a circle; use them to solve problems; give an informal derivation of the area formula.',
-        tags:['Circumference C=2πr','Area A=πr²','π','Radius & diameter'],
-        skills:['Find circumference given radius','Find circumference given diameter','Find area given radius','Find area given diameter','Find radius given circumference','Find radius given area','Solve real-world circle problems','Informal derivation using sectors'] },
-      { t:'Solve problems using angle relationships',
-        d:'Use facts about supplementary, complementary, vertical, and adjacent angles to write and solve multi-step equations for unknown angles.',
-        tags:['Supplementary','Complementary','Vertical angles','Adjacent angles','Equations'],
-        skills:['Identify supplementary angle pairs','Identify complementary angle pairs','Identify vertical angles','Find unknown angle — supplementary','Find unknown angle — complementary','Find unknown angle — vertical','Multi-step angle problems','Write and solve equations for unknown angles'] },
-      { t:'Area of composite 2D figures',
-        d:'Solve real-world and mathematical problems involving area and perimeter of two-dimensional figures composed of triangles, quadrilaterals, and other polygons.',
-        tags:['Composite figures','Area','Perimeter','Decompose shapes'],
-        skills:['Decompose a composite figure','Find area of composite figure','Find area of shaded regions','Find perimeter of composite figure','Real-world composite area problems','Area of irregular polygons by decomposing'] },
-      { t:'Surface area using nets',
-        d:'Solve real-world and mathematical problems involving surface area of three-dimensional figures composed of triangles, quadrilaterals, and polygons, using nets.',
-        tags:['Surface area','Nets','Rectangular prism','Triangular prism'],
-        skills:['Draw and use a net for a rectangular prism','Draw and use a net for a triangular prism','Find surface area from a net','Find surface area of rectangular prism','Find surface area of triangular prism','Apply surface area to packaging problems'] },
-      { t:'Volume of prisms and pyramids',
-        d:'Solve real-world and mathematical problems involving volume of three-dimensional figures including prisms; extend to pyramids and compare.',
-        tags:['Volume','Prisms','Pyramids','V=Bh'],
-        skills:['Find volume of rectangular prism V=lwh','Find volume of triangular prism','Find volume of prism with composite base','Find volume of rectangular pyramid','Compare volume of prism and pyramid with same base','Apply volume to real-world contexts'] },
+    id: 'G', code: '8.G', name: 'Geometry',
+    desc: 'Transformations, congruence, similarity, Pythagorean theorem, volume',
+    color: '#4A8FFF', bg: 'rgba(74,143,255,0.09)', icon: '△',
+    outcomes: [
+      {
+        title: 'Properties of rotations',
+        desc: 'Verify experimentally that rotations preserve line lengths, angle measures, and parallelism; lines map to lines and parallel lines remain parallel.',
+        tags: ['Rotation','Angle preservation','Length preservation','Centre of rotation'],
+        skills: ['Rotate a figure 90°, 180°, 270°', 'Identify the center of rotation', 'Verify lengths are preserved', 'Verify angles are preserved', 'Describe a rotation fully (center, angle, direction)']
+      },
+      {
+        title: 'Properties of reflections',
+        desc: 'Verify experimentally that reflections preserve line lengths and angle measures; lines map to lines and orientation is reversed.',
+        tags: ['Reflection','Line of reflection','Orientation','Symmetry'],
+        skills: ['Reflect across x-axis', 'Reflect across y-axis', 'Reflect across y=x', 'Reflect across any given line', 'Identify the line of reflection']
+      },
+      {
+        title: 'Properties of translations',
+        desc: 'Verify experimentally that translations preserve line lengths and angle measures; lines map to parallel lines.',
+        tags: ['Translation','Translation vector','Parallel lines','Preservation'],
+        skills: ['Translate using a vector (a, b)', 'Write the translation rule', 'Verify lengths and angles preserved', 'Identify direction and distance of translation']
+      },
+      {
+        title: 'Properties of dilations',
+        desc: 'Verify that a dilation takes a line not through the center to a parallel line; lines through the center map to themselves. Dilations preserve angle measures.',
+        tags: ['Dilation','Scale factor','Centre of dilation','Similarity'],
+        skills: ['Dilate from the origin', 'Dilate from a point other than origin', 'Find the scale factor', 'Verify angles are preserved', 'Determine if lines are parallel after dilation']
+      },
+      {
+        title: 'Congruence and rigid motions',
+        desc: 'Two figures are congruent if one can be obtained from the other by a sequence of rotations, reflections, and translations.',
+        tags: ['Congruent figures','Rigid motions','Sequence of transformations','Proof'],
+        skills: ['Determine if two figures are congruent', 'Describe the sequence of rigid motions', 'Identify corresponding parts', 'Use coordinates to verify congruence']
+      },
+      {
+        title: 'Similarity and dilations',
+        desc: 'Two figures are similar if one can be obtained from the other by a dilation (and possibly rigid motions). Use this to establish AA similarity for triangles.',
+        tags: ['Similar figures','Dilation + rigid motion','AA criterion','Scale factor'],
+        skills: ['Determine if two figures are similar', 'Find the scale factor between similar figures', 'Apply AA similarity criterion', 'Find missing side lengths using similarity', 'Describe similarity transformation sequence']
+      },
+      {
+        title: 'Angle relationships: parallel lines & transversals',
+        desc: 'Identify and use angle relationships formed when parallel lines are cut by a transversal including corresponding, alternate interior, and co-interior angles.',
+        tags: ['Corresponding angles','Alternate interior','Co-interior','Transversal'],
+        skills: ['Name angle pairs', 'Find missing angles using angle relationships', 'Prove lines are parallel from angle evidence', 'Apply in multi-step problems']
+      },
+      {
+        title: 'Angle sum of triangles',
+        desc: 'Use properties of parallel lines and transversals to establish that the interior angle sum of any triangle is 180°.',
+        tags: ['180° sum','Informal proof','Exterior angles','Triangle properties'],
+        skills: ['Find a missing angle in a triangle', 'Apply angle sum in multi-step problems', 'Use exterior angle theorem', 'Prove angle sum using parallel lines']
+      },
+      {
+        title: 'Proof of the Pythagorean theorem',
+        desc: 'Explain and understand a proof of the Pythagorean theorem (a²+b²=c²) and its converse using area models or similar triangles.',
+        tags: ['Proof','a²+b²=c²','Converse','Area model'],
+        skills: ['State the theorem correctly', 'Explain area-based proof', 'Identify the hypotenuse', 'Apply the converse to verify right angles']
+      },
+      {
+        title: 'Apply the Pythagorean theorem',
+        desc: 'Use a²+b²=c² to find unknown side lengths in right triangles; apply in 2D and 3D real-world problems.',
+        tags: ['Unknown sides','Right triangles','Real-world','2D and 3D'],
+        skills: ['Find the hypotenuse', 'Find a missing leg', 'Apply in real-world 2D context', 'Apply in 3D (diagonal of box, ladder problems)', 'Multi-step Pythagorean problems']
+      },
+      {
+        title: 'Distance in the coordinate plane',
+        desc: 'Apply the Pythagorean theorem to find the distance between two points in a coordinate system by forming a right triangle.',
+        tags: ['Distance formula','Coordinate plane','Right triangle','Midpoint'],
+        skills: ['Find distance between two points', 'Derive the distance formula', 'Find the length of a line segment on a grid', 'Apply distance in real-world map problems']
+      },
+      {
+        title: 'Volume of cones and cylinders',
+        desc: 'Know and apply the formulas V=πr²h for cylinders and V=⅓πr²h for cones to solve real-world and mathematical problems.',
+        tags: ['Cylinder volume','Cone volume','πr²h','Real-world'],
+        skills: ['Find volume of a cylinder given r and h', 'Find volume of a cone given r and h', 'Find missing dimension given volume', 'Compare volumes of cylinder and cone', 'Real-world composite problems']
+      },
+      {
+        title: 'Volume of spheres',
+        desc: 'Know and apply the formula V=⁴⁄₃πr³ to solve problems involving the volume of spheres in mathematical and real-world contexts.',
+        tags: ['Sphere volume','⁴⁄₃πr³','Real-world applications'],
+        skills: ['Find volume given radius', 'Find volume given diameter', 'Find the radius given volume', 'Compare sphere to cylinder volume', 'Multi-shape real-world problems']
+      },
     ]
   },
   {
-    id:'SP', code:'7.SP', icon:'∑',
-    name:'Statistics & Probability',
-    desc:'Sampling, comparing populations, probability, simulations',
-    c:'#FF4F84', cl:'rgba(255,79,132,0.12)', cb:'rgba(255,79,132,0.28)',
-    cStripe:'linear-gradient(90deg,#FF4F84,#7058FF)',
-    outcomes:[
-      { t:'Understand statistical sampling',
-        d:'Understand that statistics can be used to gain information about a population by examining a sample; random sampling gives representative and fair results.',
-        tags:['Population','Sample','Random sampling','Bias'],
-        skills:['Distinguish population from sample','Identify random vs non-random samples','Identify biased sampling methods','Explain why random sampling is fair','Determine if a sample is representative','Critique a sampling method'] },
-      { t:'Draw inferences from random samples',
-        d:'Use data from a random sample to draw inferences about a population; generate multiple samples and observe variation in estimates.',
-        tags:['Inference','Sample proportion','Sampling variability','Predict population'],
-        skills:['Use sample proportion to estimate population','Predict population total from a sample','Generate multiple samples and compare','Understand sampling variability','Use mean or median to estimate population','Identify reasonable vs unreasonable inferences'] },
-      { t:'Compare two populations informally',
-        d:'Informally assess the degree of visual overlap of two numerical data distributions; use measures of centre and variability (MAD and IQR) to compare populations.',
-        tags:['Compare distributions','Mean','Median','MAD','IQR','Box plots'],
-        skills:['Compare centres (means or medians)','Compare variability (MAD or IQR)','Calculate mean absolute deviation (MAD)','Interpret overlap in dot plots','Interpret side-by-side box plots','Draw informal conclusions from comparison','Express differences in units of variability'] },
-      { t:'Understand probability fundamentals',
-        d:'Understand that probability is a number between 0 and 1 expressing likelihood; interpret probability as long-run relative frequency.',
-        tags:['Probability scale 0–1','Likelihood language','Theoretical probability','Complementary events'],
-        skills:['Place events on a 0–1 probability scale','Use likelihood language (impossible → certain)','Calculate theoretical probability P(E)','Collect data and compute relative frequency','Compare experimental and theoretical probability','Identify complementary events'] },
-      { t:'Approximate probability through experiments',
-        d:'Approximate the probability of a chance event by collecting data on the process that produces it; observe convergence to theoretical probability over many trials.',
-        tags:['Experiment','Relative frequency','Long-run','Simulation','Convergence'],
-        skills:['Design and conduct a probability experiment','Record and organise trial data','Calculate relative frequency after each trial','Observe convergence to theoretical probability','Explain variation between experiments','Use technology to simulate many trials'] },
-      { t:'Develop probability models',
-        d:'Develop probability models (uniform and non-uniform) and use them to find probabilities of events; compare model predictions to observed frequencies.',
-        tags:['Uniform model','Non-uniform model','Sample space','Observed vs expected'],
-        skills:['Assign probabilities using a uniform model','Assign probabilities using a non-uniform model','Determine if a model is good by comparing observed/expected','List outcomes of a sample space','Find probability of a simple event','Find probability of the complement'] },
-      { t:'Find probabilities of compound events',
-        d:'Find probabilities of compound events using organised lists, tables, tree diagrams, and simulation.',
-        tags:['Compound events','Tree diagram','Sample space table','Simulation'],
-        skills:['List outcomes of a compound event','Use a tree diagram for compound events','Use a sample space table','Find probability from a tree diagram','Find probability from a table','Design a simulation for a compound event','Interpret simulation results'] },
-      { t:'Probability of compound events — fractions of outcomes',
-        d:'Understand that the probability of a compound event is the fraction of outcomes in the sample space for which it occurs; apply to independent events.',
-        tags:['Sample space fractions','P(A and B)','P(A or B)','Independent events'],
-        skills:['List complete sample space for a compound event','Find P(A and B)','Find P(A or B) for mutually exclusive events','Find P(A or B) for non-mutually exclusive events','Apply P(A and B)=P(A)×P(B) for independent events','Apply to games and simulations'] },
+    id: 'SP', code: '8.SP', name: 'Statistics & Probability',
+    desc: 'Scatter plots, association, line of best fit, two-way tables',
+    color: '#C44DFF', bg: 'rgba(196,77,255,0.09)', icon: '∑',
+    outcomes: [
+      {
+        title: 'Construct and read scatter plots',
+        desc: 'Construct scatter plots for bivariate measurement data; describe and interpret patterns, clusters, gaps, and outliers.',
+        tags: ['Scatter plot','Bivariate data','Clusters','Outliers','Association'],
+        skills: ['Plot bivariate data on a scatter plot', 'Describe the overall pattern', 'Identify outliers', 'Identify clusters and gaps', 'Describe direction of association (positive/negative/none)', 'Describe form (linear/non-linear)']
+      },
+      {
+        title: 'Describe patterns of association',
+        desc: 'Identify positive, negative, and no association; linear and non-linear forms; strong and weak associations in scatter plots.',
+        tags: ['Positive association','Negative association','Strong/weak','Linear form'],
+        skills: ['Identify positive vs negative association', 'Distinguish linear from non-linear association', 'Describe strength of association', 'Match scatter plots to descriptions', 'Compare two scatter plots']
+      },
+      {
+        title: 'Informally fit a line to data',
+        desc: 'Draw a line of best fit (trend line) through data; understand the line should pass through the middle of the data with roughly equal points above and below.',
+        tags: ['Line of best fit','Trend line','Informal fit','Residuals'],
+        skills: ['Draw a line of best fit by eye', 'Assess quality of fit', 'Understand the concept of residuals informally', 'Identify a poor fit vs good fit']
+      },
+      {
+        title: 'Use a linear model to make predictions',
+        desc: 'Use the equation of a linear model to solve problems; distinguish between interpolation (within data range) and extrapolation (beyond data range).',
+        tags: ['Prediction','Interpolation','Extrapolation','Linear model equation'],
+        skills: ['Write the equation of a line of best fit', 'Predict a y-value for a given x', 'Predict an x-value for a given y', 'Recognise limits of extrapolation', 'Real-world prediction problems']
+      },
+      {
+        title: 'Interpret slope and intercept of a linear model',
+        desc: 'Interpret the meaning of the slope and y-intercept of a linear model within the real-world context of the bivariate data.',
+        tags: ['Slope interpretation','Intercept interpretation','Context','Rate of change'],
+        skills: ['Interpret slope as a rate of change in context', 'Interpret y-intercept in context', 'Explain what the slope value means in words', 'Explain whether intercept is meaningful in context']
+      },
+      {
+        title: 'Two-way frequency tables',
+        desc: 'Construct and interpret two-way tables summarising data on two categorical variables collected from the same subjects.',
+        tags: ['Two-way table','Categorical data','Frequency','Joint/marginal'],
+        skills: ['Construct a two-way frequency table', 'Read joint frequencies', 'Read marginal frequencies', 'Find totals and grand total', 'Identify patterns across categories']
+      },
+      {
+        title: 'Relative frequency and association',
+        desc: 'Use relative frequencies calculated for rows or columns to describe possible associations between two categorical variables.',
+        tags: ['Relative frequency','Row proportions','Column proportions','Association'],
+        skills: ['Calculate row relative frequencies', 'Calculate column relative frequencies', 'Identify association from relative frequencies', 'Compare relative frequencies across groups', 'Draw conclusions about categorical association']
+      },
     ]
-  },
-];
-
-let openRowKey = {};   // track open row state
-
-/* ── FLOATING SYMBOLS ── */
-const SYMS = ['∫','∑','π','√','∞','Δ','θ','λ','α','β','γ','φ','ε','±','÷','×','∝','∈','≠','≤'];
-// On white bg: use brand colours at 20-30% opacity so they're visible but don't overpower
-const COLS = [
-  'rgba(255,102,53,0.22)',   // orange
-  'rgba(112,88,255,0.22)',   // purple
-  'rgba(255,164,28,0.25)',   // amber
-  'rgba(44,129,237,0.22)',   // blue
-  'rgba(255,79,132,0.22)',   // pink
-  'rgba(15,21,116,0.15)',    // navy
-];
-function launchSymbols(){
-  const layer = document.getElementById('symLayer');
-  function add(startFraction){
-    const el = document.createElement('div');
-    el.className = 'sym';
-    el.textContent = SYMS[Math.floor(Math.random()*SYMS.length)];
-    const sz = Math.random()*22+11;
-    const dur = Math.random()*16+12;
-    // startFraction: 0=top, 1=bottom; convert to top% (symbols move upward)
-    const startTop = startFraction !== undefined
-      ? startFraction * 100
-      : Math.random() * 110; // random spread 0–110vh (some slightly below fold)
-    el.style.cssText = `
-      left:${Math.random()*100}%;
-      top:${startTop}%;
-      font-size:${sz}px;
-      color:${COLS[Math.floor(Math.random()*COLS.length)]};
-      opacity:0;
-      animation-duration:${dur}s;
-      animation-delay:0s;
-    `;
-    layer.appendChild(el);
-    setTimeout(()=>el.remove(), (dur+1)*1000);
   }
-  // Initial burst: spread across entire page at random heights
-  for(let i=0;i<22;i++) setTimeout(()=>add(Math.random()), i*200);
-  // Ongoing: new ones from random heights
-  setInterval(()=>add(Math.random()*1.1), 1200);
-}
-launchSymbols();
+];
 
-/* ── BUILD FILTER STRIP ── */
-function buildFilters(){
-  const strip = document.getElementById('filterStrip');
+let openDomain = null;
+let openOutcomes = {};
 
-  const allBtn = mkBtn('all','All Domains',null,true);
-  strip.appendChild(allBtn);
+function buildNav() {
+  const nav = document.getElementById('domainNav');
+  // All tab
+  const allTab = document.createElement('button');
+  allTab.className = 'nav-tab active';
+  allTab.dataset.id = 'all';
+  allTab.innerHTML = `<span>All Domains</span><span class="nav-count">${DOMAINS.length}</span>`;
+  allTab.addEventListener('click', () => filterDomains('all'));
+  nav.appendChild(allTab);
 
-  DS.forEach(d=>{
-    strip.appendChild(mkBtn(d.id, d.id+' · '+d.name, d, false));
-  });
-}
-function mkBtn(id, label, d, on){
-  const b = document.createElement('button');
-  b.className = 'fs-btn' + (on?' on':'');
-  b.dataset.fid = id;
-  if(d) b.innerHTML = `<span class="fs-dot" style="background:${d.c}"></span>${d.name}<span class="fs-count" style="background:${d.cl};color:${d.c}">${d.outcomes.length}</span>`;
-  else  b.innerHTML = `All Domains <span class="fs-count">${DS.reduce((a,x)=>a+x.outcomes.length,0)}</span>`;
-  if(on){ b.style.background='var(--navy)'; b.style.color='#fff'; b.style.borderColor='var(--navy)'; }
-  b.onclick = ()=>setFilter(id, b, d);
-  return b;
-}
-function setFilter(id, btn, d){
-  document.querySelectorAll('.fs-btn').forEach(b=>{
-    b.classList.remove('on');
-    b.style.background=''; b.style.color=''; b.style.borderColor='';
-  });
-  btn.classList.add('on');
-  if(id==='all'){ btn.style.background='var(--navy)'; btn.style.color='#fff'; btn.style.borderColor='var(--navy)'; }
-  else          { btn.style.background=d.c; btn.style.color='#fff'; btn.style.borderColor=d.c; }
-  document.querySelectorAll('.rm-item').forEach(el=>{
-    el.style.display = (id==='all'||el.dataset.did===id) ? '' : 'none';
+  DOMAINS.forEach(d => {
+    const tab = document.createElement('button');
+    tab.className = 'nav-tab';
+    tab.dataset.id = d.id;
+    tab.innerHTML = `<span class="nav-dot" style="background:${d.color};"></span><span>${d.name}</span><span class="nav-count">${d.outcomes.length}</span>`;
+    tab.addEventListener('click', () => filterDomains(d.id));
+    nav.appendChild(tab);
   });
 }
 
-/* ── BUILD ACCORDION ── */
-function buildRoadmap(){
-  const wrap = document.getElementById('roadmap');
-  DS.forEach((d, di)=>{
-    const item = document.createElement('div');
-    item.className = 'rm-item';
-    item.dataset.did = d.id;
-    item.style.animationDelay = (0.08 + di*0.07)+'s';
+function filterDomains(id) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.id === id));
+  document.querySelectorAll('.domain-block').forEach(b => {
+    b.style.display = (id === 'all' || b.dataset.id === id) ? '' : 'none';
+  });
+}
 
-    // node circle
-    const node = document.createElement('div');
-    node.className = 'rm-node';
-    node.textContent = d.icon;
-    const nodeBg = d.id==='RP' ? '#FFF5F2' :
-                   d.id==='NS' ? '#F3F0FF' :
-                   d.id==='EE' ? '#FFFBF0' :
-                   d.id==='G'  ? '#F0F6FF' :
-                                 '#FFF0F5';
-    node.style.cssText = `background:${nodeBg};color:${d.c};border-color:${d.c};
-      box-shadow:0 0 0 4px ${nodeBg}, 0px 8px 24px rgba(0,0,0,0.12), 0 0 0 1px ${d.cb};
-      font-family:'Inconsolata',monospace;font-weight:900;`;
-    node.onclick = ()=>toggleCard(d.id);
+function buildDomains() {
+  const container = document.getElementById('domainsContainer');
+  DOMAINS.forEach((d, di) => {
+    const block = document.createElement('div');
+    block.className = 'domain-block';
+    block.dataset.id = d.id;
 
-    // card shell
-    const card = document.createElement('div');
-    card.className = 'rm-card';
-    card.id = 'card-'+d.id;
-
-    // coloured top stripe
-    const stripe = document.createElement('div');
-    stripe.className = 'rm-card-stripe';
-    stripe.style.background = d.cStripe;
-
-    // domain header row
-    const hdr = document.createElement('div');
-    hdr.className = 'rm-card-hdr';
-    hdr.innerHTML = `
-      <div class="rm-card-icon" style="background:${d.cl};color:${d.c}">${d.icon}</div>
-      <div class="rm-card-info">
-        <div class="rm-card-name">${d.name}</div>
-        <div class="rm-card-desc">${d.desc}</div>
+    // Header
+    const header = document.createElement('div');
+    header.className = 'domain-header';
+    header.innerHTML = `
+      <div class="domain-accent" style="background:${d.color};"></div>
+      <div class="domain-icon-wrap" style="background:${d.bg};">
+        <span style="font-family:var(--mono);font-size:13px;font-weight:500;color:${d.color};">${d.icon}</span>
       </div>
-      <div class="rm-card-right">
-        <span class="rm-code" style="color:${d.c};background:${d.cl};border-color:${d.cb}">${d.code}</span>
-        <span class="rm-ct">${d.outcomes.length} outcomes</span>
-        <div class="chev">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="2,3.5 5.5,7 9,3.5"/>
-          </svg>
-        </div>
+      <div class="domain-meta">
+        <div class="domain-name">${d.name}</div>
+        <div class="domain-desc">${d.desc}</div>
+      </div>
+      <div class="domain-right">
+        <span class="domain-code" style="color:${d.color};background:${d.bg};border-color:${d.color}22;">${d.code}</span>
+        <span class="domain-badge">${d.outcomes.length} outcomes</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4,6 8,10 12,6"/>
+        </svg>
       </div>`;
-    hdr.onclick = ()=>toggleCard(d.id);
+    header.addEventListener('click', () => toggleDomain(d.id));
+    block.appendChild(header);
 
-    // accordion outcomes wrapper
-    const accWrap = document.createElement('div');
-    accWrap.className = 'acc-outcomes-wrap';
-    accWrap.id = 'aw-'+d.id;
+    // Outcomes wrap
+    const wrap = document.createElement('div');
+    wrap.className = 'outcomes-wrap';
+    const inner = document.createElement('div');
+    inner.className = 'outcomes-inner';
+    inner.innerHTML = '<div class="outcomes-divider"></div>';
 
-    const accInner = document.createElement('div');
-    accInner.className = 'acc-outcomes-inner';
-    accInner.id = 'ai-'+d.id;
-
-    // build each outcome row
-    d.outcomes.forEach((o, oi)=>{
+    d.outcomes.forEach((o, oi) => {
       const row = document.createElement('div');
-      row.className = 'acc-row';
-      row.id = `ar-${d.id}-${oi}`;
+      row.className = 'outcome-row';
+      row.id = `outcome-${d.id}-${oi}`;
 
-      const left = document.createElement('div');
-      left.className = 'acc-row-left';
-      left.innerHTML = `
-        <span class="acc-row-num" style="background:${d.cl};color:${d.c}">${String(oi+1).padStart(2,'0')}</span>
-        <span class="acc-row-title">${o.t}</span>`;
+      const oh = document.createElement('div');
+      oh.className = 'outcome-header';
+      oh.innerHTML = `
+        <span class="outcome-index" style="color:${d.color};">${String(oi+1).padStart(2,'0')}</span>
+        <span class="outcome-bullet" style="background:${d.color};opacity:0.6;"></span>
+        <span class="outcome-title">${o.title}</span>
+        <span class="outcome-expand-icon"><span class="expand-cross"></span></span>`;
+      oh.addEventListener('click', (e) => { e.stopPropagation(); toggleOutcome(d.id, oi, d.color, o); });
+      row.appendChild(oh);
 
-      const tog = document.createElement('div');
-      tog.className = 'acc-row-toggle';
+      const sp = document.createElement('div');
+      sp.className = 'sub-panel';
+      sp.id = `sub-${d.id}-${oi}`;
+      row.appendChild(sp);
 
-      row.appendChild(left);
-      row.appendChild(tog);
-      row.onclick = ()=>toggleRow(d.id, oi);
-
-      // detail panel for this row
-      const det = document.createElement('div');
-      det.className = 'acc-det';
-      det.id = `ad-${d.id}-${oi}`;
-
-      accInner.appendChild(row);
-      accInner.appendChild(det);
+      inner.appendChild(row);
     });
 
-    accWrap.appendChild(accInner);
-    card.appendChild(stripe);
-    card.appendChild(hdr);
-    card.appendChild(accWrap);
-    item.appendChild(node);
-    item.appendChild(card);
-    wrap.appendChild(item);
-  });
-
-  // Open all domains on load with a small stagger between each
-  DS.forEach((d, di)=>{
-    setTimeout(()=>toggleCard(d.id), 80 + di * 60);
+    wrap.appendChild(inner);
+    block.appendChild(wrap);
+    container.appendChild(block);
   });
 }
 
-function toggleCard(did){
-  const card = document.getElementById('card-'+did);
-  const aw   = document.getElementById('aw-'+did);
-  const ai   = document.getElementById('ai-'+did);
-  const isOpen = card.classList.contains('open');
+function toggleDomain(id) {
+  const block = document.querySelector(`.domain-block[data-id="${id}"]`);
+  const wrap = block.querySelector('.outcomes-wrap');
+  const isOpen = block.classList.contains('is-open');
 
-  if(isOpen){
-    card.classList.remove('open');
-    aw.style.maxHeight = '0';
+  if (isOpen) {
+    wrap.style.maxHeight = '0';
+    block.classList.remove('is-open');
+    // reset outcomes
+    block.querySelectorAll('.outcome-row').forEach(r => r.classList.remove('revealed'));
   } else {
-    card.classList.add('open');
-    // stagger row entrance
-    const rows = ai.querySelectorAll('.acc-row');
-    rows.forEach((r,i)=>{ r.classList.remove('revealed'); setTimeout(()=>r.classList.add('revealed'), 30+i*28); });
-    aw.style.maxHeight = '0';
-    requestAnimationFrame(()=>{ aw.style.maxHeight = ai.scrollHeight + 2000 + 'px'; });
+    block.classList.add('is-open');
+    // measure content height
+    const inner = wrap.querySelector('.outcomes-inner');
+    wrap.style.maxHeight = inner.scrollHeight + 'px';
+    // stagger reveal
+    const rows = block.querySelectorAll('.outcome-row');
+    rows.forEach((r, i) => {
+      setTimeout(() => r.classList.add('revealed'), 60 + i * 40);
+    });
   }
 }
 
-function toggleRow(did, oi){
-  const key  = `${did}-${oi}`;
-  const row  = document.getElementById(`ar-${did}-${oi}`);
-  const det  = document.getElementById(`ad-${did}-${oi}`);
-  const aw   = document.getElementById('aw-'+did);
-  const ai   = document.getElementById('ai-'+did);
-  const d    = DS.find(x=>x.id===did);
-  const o    = d.outcomes[oi];
+function toggleOutcome(domainId, outcomeIdx, color, outcome) {
+  const key = `${domainId}-${outcomeIdx}`;
+  const row = document.getElementById(`outcome-${key}`);
+  const sub = document.getElementById(`sub-${key}`);
   const isOpen = row.classList.contains('is-open');
 
-  if(isOpen){
+  if (isOpen) {
+    sub.style.maxHeight = '0';
     row.classList.remove('is-open');
-    det.style.maxHeight = '0';
-    setTimeout(()=>{ aw.style.maxHeight = ai.scrollHeight + 'px'; }, 40);
-    return;
+  } else {
+    // Build content if empty
+    if (!sub.querySelector('.sub-inner')) {
+      const inner = document.createElement('div');
+      inner.className = 'sub-inner';
+
+      const desc = document.createElement('p');
+      desc.className = 'sub-desc';
+      desc.textContent = outcome.desc;
+      inner.appendChild(desc);
+
+      // Tags
+      if (outcome.tags && outcome.tags.length) {
+        const tagLabel = document.createElement('div');
+        tagLabel.className = 'sub-tag-label';
+        tagLabel.textContent = 'Topics covered';
+        inner.appendChild(tagLabel);
+        const tags = document.createElement('div');
+        tags.className = 'sub-tags';
+        outcome.tags.forEach(t => {
+          const chip = document.createElement('span');
+          chip.className = 'sub-tag';
+          chip.textContent = t;
+          chip.style.cssText = `color:${color};background:${color}15;border-color:${color}30;`;
+          tags.appendChild(chip);
+        });
+        inner.appendChild(tags);
+      }
+
+      // Skills
+      if (outcome.skills && outcome.skills.length) {
+        const skillLabel = document.createElement('div');
+        skillLabel.className = 'sub-tag-label';
+        skillLabel.style.marginTop = '12px';
+        skillLabel.textContent = 'Specific skills';
+        inner.appendChild(skillLabel);
+        const skillTags = document.createElement('div');
+        skillTags.className = 'sub-tags';
+        outcome.skills.forEach(s => {
+          const chip = document.createElement('span');
+          chip.className = 'sub-tag';
+          chip.textContent = s;
+          chip.style.cssText = `color:var(--text2);background:var(--navy4);border-color:var(--border);font-weight:400;`;
+          skillTags.appendChild(chip);
+        });
+        inner.appendChild(skillTags);
+      }
+
+      sub.appendChild(inner);
+    }
+
+    row.classList.add('is-open');
+    sub.style.maxHeight = sub.scrollHeight + 800 + 'px';
+
+    // Re-measure parent wrap
+    setTimeout(() => {
+      const block = document.querySelector(`.domain-block[data-id="${domainId}"]`);
+      const wrap = block.querySelector('.outcomes-wrap');
+      const innerEl = wrap.querySelector('.outcomes-inner');
+      wrap.style.maxHeight = innerEl.scrollHeight + 'px';
+    }, 50);
+  }
+}
+
+buildNav();
+buildDomains();
+
+/* ═════════════════════════════════════
+   NEW: GRADE 8 SAMPLE QUESTIONS BANK
+══════════════════════════════════════ */
+const QS_BANK = {
+  // 8.NS — The Number System (3 outcomes)
+  'NS-0': ['Is √15 rational or irrational? Justify your answer.', 'Approximate √20 to one decimal place.', 'Place √11 between two consecutive integers.'],
+  'NS-1': ['Place √3 between two consecutive tenths on a number line.', 'Estimate where π lies between two integers.', 'Locate −√5 on the number line.'],
+  'NS-2': ['Convert the repeating decimal 0.272727… to a fraction.', 'Is 5/8 terminating or repeating? Explain.', 'Convert 7/11 to a decimal expansion.'],
+
+  // 8.EE — Expressions & Equations (11 outcomes)
+  'EE-0': ['Simplify: 3⁴ × 3⁻²', 'Simplify: (2³)⁴ ÷ 2⁵', 'Write 5⁻³ with a positive exponent.'],
+  'EE-1': ['Solve x² = 144. Find both solutions.', 'Evaluate ∛125.', 'Estimate √50 to one decimal place.'],
+  'EE-2': ['Write 73,400,000 in scientific notation.', 'Convert 0.0000058 to scientific notation.', 'Write 3.2 × 10⁵ in standard form.'],
+  'EE-3': ['Multiply: (3 × 10⁴) × (2 × 10⁵)', 'Divide: (8 × 10⁹) ÷ (4 × 10⁴)', 'Add: 2.3 × 10⁶ + 4.5 × 10⁶'],
+  'EE-4': ['A graph has a slope of 4. What does that mean as a unit rate?', 'Compare two relationships: y = 5x and a graph passing through (2,8). Which has greater slope?', 'Write y = kx for a relationship where 3 cookies cost $2.40.'],
+  'EE-5': ['Find the slope of the line through (2, 5) and (6, 13).', 'Show that the slope between (1,3) and (4,9) equals the slope between (4,9) and (7,15).', 'Why is the slope of a line the same between any two points?'],
+  'EE-6': ['Solve: 4(x − 3) = 2x + 6', 'Solve: 5x + 7 = 5x + 12. How many solutions?', 'Solve: 3(2x + 1) − 2x = 4x + 3. Identify type of solution.'],
+  'EE-7': ['Two lines have slopes 2 and −1. How many solutions does the system have?', 'A system has lines that are the same. Describe the solution set.', 'Two parallel lines form a system. How many solutions?'],
+  'EE-8': ['Solve graphically: y = 2x + 1 and y = −x + 4.', 'Estimate the intersection of y = 3x − 2 and y = x + 4.', 'Graph y = ½x + 3 and y = ½x − 1. What does this tell you?'],
+  'EE-9': ['Solve by substitution: y = 2x + 1, 3x + y = 11.', 'Solve by elimination: 2x + y = 7, 4x − y = 5.', 'Solve: x + 2y = 10, 3x − y = 9.'],
+  'EE-10': ['A coffee shop sells lattes at $4 and teas at $2.50. They sell 80 drinks for $260. Find how many of each.', 'Two trains depart 200 km apart, heading toward each other. They meet in 2 hours. One travels 20 km/h faster. Find both speeds.', 'A class of 30 has 4 more girls than boys. Find how many of each.'],
+
+  // 8.F — Functions (5 outcomes)
+  'F-0': ['Is the relation {(1,2),(2,4),(3,6),(2,5)} a function? Why?', 'If f(x) = 3x − 2, find f(4).', 'Apply the vertical line test: does y = x² define a function?'],
+  'F-1': ['Function A: y = 3x + 2. Function B has slope 4 and passes through (0,1). Which has greater rate of change?', 'Compare initial values: y = 2x − 5 vs a graph through (0,3). Which has higher y-intercept?', 'Two linear functions: which grows faster — y = 0.5x + 10 or y = 2x − 1?'],
+  'F-2': ['Identify slope and y-intercept of y = −3x + 7.', 'Write the equation of a line with slope 2 passing through (1, 5).', 'Graph y = ¼x − 2.'],
+  'F-3': ['Is y = x² + 1 linear or non-linear? Explain.', 'A table shows (1,2), (2,4), (3,8). Linear or non-linear?', 'Sketch a non-linear function and explain why it isn\'t linear.'],
+  'F-4': ['A bike rental costs $5 plus $2 per hour. Write a function for total cost.', 'A plant grows 2.5 cm per week, starting at 10 cm. Write the function.', 'Describe a real-world non-linear scenario and sketch its graph.'],
+
+  // 8.G — Geometry (10 outcomes)
+  'G-0': ['Reflect point A(3, −2) across the x-axis. What are its new coordinates?', 'Translate triangle ABC by (4, −1). State the rule.', 'Rotate point P(−2, 3) by 90° counterclockwise about the origin.'],
+  'G-1': ['Two figures are congruent. Describe a possible sequence of transformations.', 'Are reflections rigid motions? Explain why.', 'List two transformations that preserve angle measures.'],
+  'G-2': ['Give the coordinates of (5, −3) after a translation by (−2, 4).', 'A point (a, b) is reflected across y-axis. Give the new coordinates.', 'Describe in words the rotation that maps (1,0) to (0,1).'],
+  'G-3': ['A figure is dilated by scale factor 2.5. If a side was 4 cm, what is the new side length?', 'Two figures are similar but not congruent. Give an example transformation sequence.', 'Why does dilation preserve angles but not lengths?'],
+  'G-4': ['Two triangles have the same three angle measures. Are they similar? Why?', 'Find a missing angle in a triangle when two angles are 35° and 80°.', 'Are AA-similar triangles always proportional? Justify.'],
+  'G-5': ['Two parallel lines are cut by a transversal. List a pair of corresponding angles.', 'If the angle sum of a triangle is 180°, prove it using parallel lines.', 'Explain alternate interior angles using parallel lines and a transversal.'],
+  'G-6': ['Verify: is a triangle with sides 6, 8, 10 a right triangle?', 'Use the Pythagorean theorem to find the hypotenuse: legs 5 and 12.', 'A ladder is 13 ft long, leaning against a wall. The base is 5 ft from the wall. How high does it reach?'],
+  'G-7': ['Find the missing leg of a right triangle: hypotenuse 17, one leg 8.', 'A rectangle has sides 9 and 12. Find the diagonal.', 'A flagpole casts a 12-ft shadow. The distance from the top of the pole to the tip of the shadow is 20 ft. Find the height.'],
+  'G-8': ['Find the distance between (1, 2) and (4, 6) on the coordinate plane.', 'Distance between (−3, 1) and (5, 7)?', 'Find the length of the segment from (0,0) to (8, 15).'],
+  'G-9': ['Find the volume of a cylinder with radius 3 cm and height 10 cm.', 'A cone has radius 4 cm and height 9 cm. Find its volume.', 'Find the volume of a sphere with radius 6 cm. (Use π = 3.14)'],
+
+  // 8.SP — Statistics & Probability (4 outcomes)
+  'SP-0': ['Describe the association in a scatter plot of study time vs test score.', 'A scatter plot shows no clear pattern. What can you conclude?', 'Identify outliers in a scatter plot and describe their effect.'],
+  'SP-1': ['Sketch a line of best fit on a scatter plot of height vs weight.', 'Why isn\'t the line of best fit always exact?', 'Is a curve sometimes a better fit than a line? Explain.'],
+  'SP-2': ['Given the line y = 0.8x + 2 fits a data set, predict y when x = 5.', 'Interpret the slope 1.5 in a model: shoe size vs foot length.', 'A line of best fit has y-intercept 12. What does that represent in context?'],
+  'SP-3': ['In a two-way table, 30 of 80 students who play sports also like maths. Find the relative frequency.', 'Construct a two-way frequency table for 50 people: 25 with pets, 35 who exercise, 18 who do both.', 'Interpret the row relative frequency vs column relative frequency in a two-way table.'],
+};
+
+/* ═════════════════════════════════════
+   GRADE SWITCHER
+══════════════════════════════════════ */
+let currentGrade = 8;
+
+function toggleGradeDropdown(e){
+  if(e) e.stopPropagation();
+  document.getElementById('gradeSwitcher').classList.toggle('open');
+}
+function switchGrade(g){
+  document.querySelectorAll('.grade-opt').forEach(o => {
+    o.classList.toggle('active', parseInt(o.dataset.grade)===g);
+  });
+  currentGrade = g;
+  document.getElementById('currentGradeLabel').textContent = 'Grade ' + g;
+  document.getElementById('gradeSwitcher').classList.remove('open');
+
+  const domainsContainer = document.getElementById('domainsContainer');
+  const domainNav = document.getElementById('domainNav');
+  const heroTitle = document.querySelector('.hero-title');
+  const empty = document.getElementById('emptyGrade');
+
+  if(g === 8){
+    if(empty) empty.remove();
+    domainsContainer.style.display = '';
+    domainNav.style.display = '';
+    heroTitle.innerHTML = '<strong>Grade 8</strong> Learning Outcomes';
+  } else {
+    if(empty) empty.remove();
+    domainsContainer.style.display = 'none';
+    domainNav.style.display = 'none';
+    heroTitle.innerHTML = `<strong>Grade ${g}</strong> Learning Outcomes`;
+    const e2 = document.createElement('div');
+    e2.id = 'emptyGrade';
+    e2.className = 'empty-grade';
+    e2.innerHTML = `
+      <div class="empty-grade-icon">📚</div>
+      <div class="empty-grade-title">Grade ${g} Coming Soon</div>
+      <div class="empty-grade-sub">We're building out the Grade ${g} curriculum now. Switch back to <strong>Grade 8</strong> to explore the full set of learning outcomes.</div>`;
+    domainsContainer.after(e2);
+  }
+}
+document.addEventListener('click', e => {
+  const sw = document.getElementById('gradeSwitcher');
+  if(sw && !sw.contains(e.target)) sw.classList.remove('open');
+});
+
+/* ═════════════════════════════════════
+   AUTO-EXPAND ALL DOMAINS ON LOAD
+══════════════════════════════════════ */
+setTimeout(() => {
+  DOMAINS.forEach((d, di) => {
+    setTimeout(() => toggleDomain(d.id), di * 80);
+  });
+}, 250);
+
+/* ═════════════════════════════════════
+   HOVER TOOLTIP — rotates question every 5s
+══════════════════════════════════════ */
+let showTimer = null, hideTimer = null, rotateTimer = null;
+let currentRotation = { qs: [], idx: 0, color: '' };
+
+function startShowTimer(e, kind, payload){
+  clearTimeout(showTimer); clearTimeout(hideTimer);
+  showTimer = setTimeout(() => showTooltip(e, kind, payload), 380);
+}
+function startHideTimer(){
+  clearTimeout(showTimer);
+  hideTimer = setTimeout(() => hideTooltip(), 220);
+}
+function hideTooltip(){
+  clearTimeout(rotateTimer);
+  document.getElementById('wsTooltip').classList.remove('visible');
+}
+function positionTooltip(e){
+  const tip = document.getElementById('wsTooltip');
+  if(!tip.classList.contains('visible')) return;
+  const tw = 295, m = 14;
+  let x = e.clientX + m, y = e.clientY - 70;
+  if(x + tw > window.innerWidth - 10) x = e.clientX - tw - m;
+  if(y < 10) y = 10;
+  const th = tip.offsetHeight || 200;
+  if(y + th > window.innerHeight - 10) y = window.innerHeight - th - 10;
+  tip.style.left = x + 'px';
+  tip.style.top = y + 'px';
+}
+
+// kind = 'outcome' (single skill, 3 sample qs rotating) | 'domain' (one q per skill rotating)
+function showTooltip(e, kind, payload){
+  clearTimeout(hideTimer);
+  const tip = document.getElementById('wsTooltip');
+  const icon = document.getElementById('wsTipIcon');
+  const title = document.getElementById('wsTipTitle');
+  const sub = document.getElementById('wsTipSub');
+  const lbl = document.getElementById('wsTipLabel');
+  const qsEl = document.getElementById('wsTipQs');
+  const cta = document.getElementById('wsTipCta');
+
+  if(kind === 'outcome'){
+    const {d, o, oi} = payload;
+    icon.textContent = d.icon;
+    icon.style.cssText = `background:${d.bg};color:${d.color};`;
+    title.textContent = o.title;
+    title.style.color = d.color;
+    sub.textContent = `${d.code} · Outcome ${String(oi+1).padStart(2,'0')}`;
+    lbl.textContent = 'Sample question';
+    cta.style.display = 'none';
+    const bank = QS_BANK[`${d.id}-${oi}`] || ['Sample question coming soon.'];
+    currentRotation = { qs: bank, idx: 0, color: d.color, kind, skillTitle: null };
+    renderRotatingQuestion();
+  } else { // domain
+    const {d} = payload;
+    icon.textContent = d.icon;
+    icon.style.cssText = `background:${d.bg};color:${d.color};`;
+    title.textContent = `${d.name} Worksheet`;
+    title.style.color = d.color;
+    sub.textContent = `${d.code} · ${d.outcomes.length} skills covered`;
+    lbl.textContent = `Sample · ${d.outcomes.length} questions across all skills`;
+    cta.style.display = 'flex';
+    cta.style.color = d.color;
+    cta.style.background = d.bg;
+    cta.style.borderTopColor = d.color + '33';
+    cta.onclick = () => openDomainWorksheet(d);
+    // Build a list: one question per outcome, paired with skill title
+    const qPairs = d.outcomes.map((o, oi) => {
+      const bank = QS_BANK[`${d.id}-${oi}`] || ['Sample coming soon.'];
+      return { q: bank[0], skill: o.title, oi };
+    });
+    currentRotation = { qs: qPairs, idx: 0, color: d.color, kind: 'domain' };
+    renderRotatingQuestion();
   }
 
-  row.classList.add('is-open');
+  positionTooltip(e);
+  tip.classList.add('visible');
+  tip.onmouseenter = () => clearTimeout(hideTimer);
+  tip.onmouseleave = () => startHideTimer();
+}
 
-  // build detail if not yet built
-  if(!det.querySelector('.acc-det-in')){
-    const topicChips = o.tags.map(t=>
-      `<span class="topic-chip" style="color:${d.c};background:${d.cl};border-color:${d.cb}">${t}</span>`
-    ).join('');
-    const skillRows = o.skills.map(s=>
-      `<div class="skill-row"><span class="skill-bullet" style="background:${d.c}"></span>${s}</div>`
-    ).join('');
-    det.innerHTML = `
-      <div class="acc-det-in">
-        <div class="rm-breadcrumb">
-          <span style="color:${d.c};font-weight:700">${d.code}</span>
-          <span class="rm-breadcrumb-sep">›</span>
-          <span>Outcome ${String(oi+1).padStart(2,'0')}</span>
-        </div>
-        <div class="rm-det-title" style="color:${d.c}">${o.t}</div>
-        <div class="acc-det-desc">${o.d}</div>
-        <div class="acc-det-cols">
-          <div>
-            <div class="acc-det-col-label">Topics covered</div>
-            <div class="topic-chips">${topicChips}</div>
-          </div>
-          <div>
-            <div class="acc-det-col-label">Specific skills</div>
-            <div class="skills-list">${skillRows}</div>
-          </div>
-        </div>
+function renderRotatingQuestion(){
+  const qsEl = document.getElementById('wsTipQs');
+  const r = currentRotation;
+  if(!r.qs.length) return;
+
+  if(r.kind === 'outcome'){
+    const q = r.qs[r.idx];
+    qsEl.innerHTML = `<div class="ws-q"><span class="ws-q-num">${r.idx+1}.</span><span>${q}</span></div>`;
+  } else {
+    const item = r.qs[r.idx];
+    qsEl.innerHTML = `<div class="ws-q"><span class="ws-q-num">${String(item.oi+1).padStart(2,'0')}</span><div><div class="ws-q-skill" style="color:${r.color};">${item.skill}</div>${item.q}</div></div>`;
+  }
+
+  clearTimeout(rotateTimer);
+  rotateTimer = setTimeout(() => {
+    currentRotation.idx = (currentRotation.idx + 1) % currentRotation.qs.length;
+    renderRotatingQuestion();
+  }, 5000);
+}
+
+/* Attach hover handlers to all outcome rows + add worksheet btn to each domain header */
+function attachHoverFeatures(){
+  // outcome rows
+  DOMAINS.forEach(d => {
+    d.outcomes.forEach((o, oi) => {
+      const row = document.getElementById(`outcome-${d.id}-${oi}`);
+      if(!row || row._hoverAttached) return;
+      row._hoverAttached = true;
+      const head = row.querySelector('.outcome-header');
+      head.addEventListener('mouseenter', e => startShowTimer(e, 'outcome', {d, o, oi}));
+      head.addEventListener('mousemove', e => positionTooltip(e));
+      head.addEventListener('mouseleave', () => startHideTimer());
+    });
+  });
+
+  // domain headers — add worksheet button if not present
+  DOMAINS.forEach(d => {
+    const block = document.querySelector(`.domain-block[data-id="${d.id}"]`);
+    if(!block) return;
+    const right = block.querySelector('.domain-right');
+    if(!right || right.querySelector('.domain-ws-btn')) return;
+
+    const wsBtn = document.createElement('button');
+    wsBtn.className = 'domain-ws-btn';
+    wsBtn.style.cssText = `color:${d.color};border-color:${d.color}40;background:${d.bg};`;
+    wsBtn.innerHTML = `
+      <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+        <rect x="0.5" y="0.5" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+        <line x1="2.5" y1="3.2" x2="8.5" y2="3.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <line x1="2.5" y1="5.5" x2="8.5" y2="5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+        <line x1="2.5" y1="7.8" x2="6.5" y2="7.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+      </svg>
+      Worksheet`;
+    wsBtn.addEventListener('mouseenter', e => { e.stopPropagation(); startShowTimer(e, 'domain', {d}); });
+    wsBtn.addEventListener('mousemove', e => positionTooltip(e));
+    wsBtn.addEventListener('mouseleave', () => startHideTimer());
+    wsBtn.addEventListener('click', e => { e.stopPropagation(); openDomainWorksheet(d); });
+
+    // insert before the chevron
+    const chev = right.querySelector('.chevron');
+    right.insertBefore(wsBtn, chev);
+  });
+}
+// initial pass + retry as accordions render
+setTimeout(attachHoverFeatures, 100);
+setTimeout(attachHoverFeatures, 600);
+
+/* ═════════════════════════════════════
+   WORKSHEET MODAL
+══════════════════════════════════════ */
+function openDomainWorksheet(d){
+  hideTooltip();
+  document.getElementById('mIcon').textContent = d.icon;
+  document.getElementById('mIcon').style.cssText = `background:${d.bg};color:${d.color};`;
+  document.getElementById('mDomain').textContent = `${d.code} · ${d.name}`;
+  document.getElementById('mDomain').style.color = d.color;
+  document.getElementById('mTitle').textContent = `${d.name} — Full Domain Worksheet`;
+
+  const intro = `A mixed-skill worksheet covering all ${d.outcomes.length} learning outcomes in ${d.code}: ${d.name}. One question is given from each sub-skill so you can practise the full domain in one go.`;
+
+  const qHtml = d.outcomes.map((o, oi) => {
+    const bank = QS_BANK[`${d.id}-${oi}`] || ['Sample question coming soon.'];
+    const q = bank[0];
+    return `
+      <div class="modal-q">
+        <div class="modal-q-skill" style="color:${d.color};">${o.title}</div>
+        <div class="modal-q-label" style="color:${d.color};">Question ${oi+1} of ${d.outcomes.length}</div>
+        <div class="modal-q-text">${q}</div>
+        <textarea class="modal-q-input" placeholder="Type your answer here — show all working…" rows="3"></textarea>
       </div>`;
-  }
+  }).join('');
 
-  det.style.maxHeight = '0';
-  requestAnimationFrame(()=>{
-    det.style.maxHeight = det.scrollHeight + 24 + 'px';
-    setTimeout(()=>{ aw.style.maxHeight = ai.scrollHeight + 600 + 'px'; }, 50);
-  });
+  document.getElementById('mBody').innerHTML = `
+    <div class="ws-intro">${intro}</div>
+    <div class="ws-section-lbl">Practice Questions</div>
+    ${qHtml}`;
+
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
-
-/* ── FOOTER ── */
-function buildFooter(){
-  const fc = document.getElementById('footCodes');
-  DS.forEach(d=>{
-    const s = document.createElement('span');
-    s.className = 'foot-code';
-    s.textContent = d.code;
-    s.style.cssText = `color:${d.c};background:${d.cl};border:1.5px solid ${d.cb}`;
-    fc.appendChild(s);
-  });
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
-
-buildFilters();
-buildRoadmap();
-buildFooter();
+function closeModalOuter(e){
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+}
 </script>
 </body>
 </html>
