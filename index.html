@@ -1504,12 +1504,18 @@ setTimeout(attachHoverFeatures, 600);
 /* ═════════════════════════════════════
    WORKSHEET — opens Strive's hosted worksheet
 ══════════════════════════════════════ */
-const STRIVE_WORKSHEET_URL = 'https://strivemath.org/worksheet/f0f89253-03e9-4207-a848-7a25dbaaf251';
+// Map each domain to its worksheet URL on Strive's platform.
+// Add new domain-specific URLs here as they're created.
+const WORKSHEET_URLS = {
+  'NS': 'https://strivemath.org/worksheet/f0f89253-03e9-4207-a848-7a25dbaaf251',
+  'EE': 'https://strivemath.org/worksheet/9960f073-47ab-401c-8a9f-f27fc9694c7c',
+};
+const WORKSHEET_PLACEHOLDER = 'https://strivemath.org/worksheet';
 
 function openDomainWorksheet(d){
   hideTooltip();
-  // Open Strive's hosted worksheet in a new tab
-  window.open(STRIVE_WORKSHEET_URL, '_blank', 'noopener,noreferrer');
+  const url = WORKSHEET_URLS[d.id] || WORKSHEET_PLACEHOLDER;
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 function closeModal(){
   document.getElementById('modalOverlay').classList.remove('open');
