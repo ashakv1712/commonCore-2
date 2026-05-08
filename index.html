@@ -745,8 +745,8 @@ body::before {
       <div id="wsTipQs"></div>
     </div>
     <div class="ws-cta" id="wsTipCta" style="display:none;">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="3.5" y1="4" x2="8.5" y2="4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="3.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="3.5" y1="9" x2="6.5" y2="9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      Open worksheet
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7"/><polyline points="7,2 10,2 10,5"/><line x1="6" y1="6" x2="10" y2="2"/></svg>
+      Open worksheet on Strive
     </div>
   </div>
 </div>
@@ -1418,11 +1418,7 @@ function showTooltip(e, kind, payload){
     title.style.color = d.color;
     sub.textContent = `${d.code} · ${d.outcomes.length} skills covered`;
     lbl.textContent = `Sample · ${d.outcomes.length} questions across all skills`;
-    cta.style.display = 'flex';
-    cta.style.color = d.color;
-    cta.style.background = d.bg;
-    cta.style.borderTopColor = d.color + '33';
-    cta.onclick = () => openDomainWorksheet(d);
+    cta.style.display = 'none';
     // Build a list: one question per outcome, paired with skill title
     const qPairs = d.outcomes.map((o, oi) => {
       const bank = QS_BANK[`${d.id}-${oi}`] || ['Sample coming soon.'];
@@ -1506,38 +1502,14 @@ setTimeout(attachHoverFeatures, 100);
 setTimeout(attachHoverFeatures, 600);
 
 /* ═════════════════════════════════════
-   WORKSHEET MODAL
+   WORKSHEET — opens Strive's hosted worksheet
 ══════════════════════════════════════ */
+const STRIVE_WORKSHEET_URL = 'https://strivemath.org/worksheet/f0f89253-03e9-4207-a848-7a25dbaaf251';
+
 function openDomainWorksheet(d){
   hideTooltip();
-  document.getElementById('mIcon').textContent = d.icon;
-  document.getElementById('mIcon').style.cssText = `background:${d.bg};color:${d.color};`;
-  document.getElementById('mDomain').textContent = `${d.code} · ${d.name}`;
-  document.getElementById('mDomain').style.color = d.color;
-  document.getElementById('mTitle').textContent = `${d.name} — Full Domain Worksheet`;
-
-  const intro = `A mixed-skill worksheet covering all ${d.outcomes.length} learning outcomes in ${d.code}: ${d.name}. One question is given from each sub-skill so you can practise the full domain in one go.`;
-
-  const qHtml = d.outcomes.map((o, oi) => {
-    const bank = QS_BANK[`${d.id}-${oi}`] || ['Sample question coming soon.'];
-    const q = bank[0];
-    return `
-      <div class="modal-q">
-        <div class="modal-q-skill" style="color:${d.color};">${o.title}</div>
-        <div class="modal-q-label" style="color:${d.color};">Question ${oi+1} of ${d.outcomes.length}</div>
-        <div class="modal-q-text">${q}</div>
-        <textarea class="modal-q-input" placeholder="Type your answer here — show all working…" rows="3"></textarea>
-      </div>`;
-  }).join('');
-
-  document.getElementById('mBody').innerHTML = `
-    <div class="ws-intro">${intro}</div>
-    <div class="ws-section-lbl">Practice Questions</div>
-    ${qHtml}`;
-
-  const overlay = document.getElementById('modalOverlay');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  // Open Strive's hosted worksheet in a new tab
+  window.open(STRIVE_WORKSHEET_URL, '_blank', 'noopener,noreferrer');
 }
 function closeModal(){
   document.getElementById('modalOverlay').classList.remove('open');
